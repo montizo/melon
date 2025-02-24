@@ -2,12 +2,16 @@
 
 import Input from "@/components/Input";
 import Link from "next/link";
+import { useActionState } from "react";
+import signupAction from "./actions";
 
 export default function Signup() {
+  const [state, action, isLoading] = useActionState(signupAction, null);
+
   return (
     <div>
       <h1>Signup</h1>
-      <form action={""}>
+      <form action={action}>
         <Input label="Username" type="text" name="username" placeholder="" />
         <Input
           label="Email"
@@ -21,7 +25,9 @@ export default function Signup() {
           name="password"
           placeholder="●●●●●●"
         />
-        <button type="submit">Sign up</button>
+        <button type="submit" disabled={isLoading}>
+          Sign up
+        </button>
       </form>
       <p>
         Have an account? <Link href="/login">Login</Link>
