@@ -16,7 +16,7 @@ export default function Signup() {
         <Input
           label="Email"
           type="text"
-          name="text"
+          name="email"
           placeholder="you@domain.xyz"
         />
         <Input
