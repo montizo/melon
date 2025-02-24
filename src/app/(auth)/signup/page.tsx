@@ -12,7 +12,7 @@ export default function Signup() {
     <div>
       <h1>Signup</h1>
       <form action={action}>
-        <Input label="Username" type="text" name="username" placeholder="" />
+        <Input label="Username" type="text" name="username" />
         <Input
           label="Email"
           type="text"
