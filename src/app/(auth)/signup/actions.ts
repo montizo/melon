@@ -1,6 +1,6 @@
 "use server";
 
-import { createUser } from "@/lib/auth/user";
+import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 
 export default async function signupAction(
   _: any,
@@ -16,6 +16,11 @@ export default async function signupAction(
     typeof password !== "string"
   ) {
     return { message: "Invalid input fields", success: false };
+  }
+
+  const uniqueFields = await isEmailOrUsernameTaken(email, username);
+  if (uniqueFields) {
+    return { message: "Email or username already taken", success: false };
   }
 
   const user = await createUser(username, email, password);
