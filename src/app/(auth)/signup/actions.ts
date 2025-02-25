@@ -29,3 +29,11 @@ export default async function signupAction(
 
   return { message: "Sign up successful", success: true };
 }
+
+export async function checkEmailNotTaken(email: string) {
+  return isEmailOrUsernameTaken(email, "");
+}
+
+export async function checkUsernameNotTaken(username: string) {
+  return isEmailOrUsernameTaken("", username);
+}

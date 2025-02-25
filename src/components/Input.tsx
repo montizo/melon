@@ -7,16 +7,19 @@ export default function Input({
   name,
   placeholder = "",
   validation,
+  checkExists,
 }: {
   label: string;
   type: string;
   name: string;
   placeholder?: string;
   validation?: ZodString;
+  checkExists?: (value: string) => Promise<boolean>;
 }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [showError, setShowError] = useState(false);
+  const [exists, setExists] = useState(false);
 
   useEffect(() => {
     const result = validation?.safeParse(value);
@@ -32,7 +35,19 @@ export default function Input({
         name={name}
         placeholder={placeholder}
         onBlur={() => setShowError(true)}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={async (e) => {
+          const inputValue = e.target.value;
+          setValue(inputValue);
+          if (checkExists && error === "") {
+            const exists = await checkExists(inputValue);
+            setExists(exists);
+            if (exists) {
+              setError(`${label} already taken`);
+            } else {
+              setError("");
+            }
+          }
+        }}
       />
       {error && showError && <p>{error}</p>}
     </div>

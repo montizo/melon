@@ -1,5 +1,12 @@
+import { getCurrentSession } from "@/lib/auth/session";
 import LoginForm from "@/ui/auth/Login";
+import { redirect } from "next/navigation";
 
-export default function Login() {
+export default async function Login() {
+  const session = await getCurrentSession();
+  if (session.userId) {
+    redirect("/");
+  }
+
   return <LoginForm />;
 }
