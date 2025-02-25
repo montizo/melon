@@ -34,3 +34,11 @@ export async function createUser(
   const { passwordHash: _, ...userWithoutPassword } = newUser;
   return userWithoutPassword;
 }
+
+export async function getUserByEmail(email: string) {
+  return prisma.user.findFirst({
+    where: {
+      email: email,
+    },
+  });
+}
