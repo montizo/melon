@@ -1,5 +1,6 @@
 "use server";
 
+import { setSessionCookie } from "@/lib/auth/session";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 
 export default async function signupAction(
@@ -24,6 +25,7 @@ export default async function signupAction(
   }
 
   const user = await createUser(username, email, password);
+  await setSessionCookie(user.id);
 
   return { message: "Sign up successful", success: true };
 }

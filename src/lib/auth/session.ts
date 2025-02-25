@@ -1,5 +1,20 @@
 import crypto from "crypto";
 import redis from "../db/redis";
+import { cookies } from "next/headers";
+
+export async function setSessionCookie(userId: string) {
+  const sessionToken = await generateSessionToken();
+  const session = await createSession(sessionToken, userId);
+  const cookieStore = await cookies();
+
+  cookieStore.set("session", sessionToken, {
+    httpOnly: true,
+    path: "/",
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    expires: session.expiresAt,
+  });
+}
 
 export async function generateSessionToken() {
   const token = crypto.randomBytes(32).toString("hex");
