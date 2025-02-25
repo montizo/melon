@@ -13,6 +13,7 @@
     "bcryptjs": "^3.0.2",
     "ioredis": "^5.5.0",
     "next": "15.1.7",
+    "next-client-cookies": "^2.0.1",
     "prisma": "^6.4.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
