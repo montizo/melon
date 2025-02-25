@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import verifyEmailAction from "@/app/(auth)/verify-email/actions";
+import { useActionState, useEffect, useRef, useState } from "react";
 
 export default function VerifyEmail() {
+  const [state, action] = useActionState(verifyEmailAction, null);
   const [code, setCode] = useState(new Array(8).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const error = "";
@@ -30,8 +32,8 @@ export default function VerifyEmail() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const verificationCode = code.join("");
-    // verify email
-    console.log(verificationCode);
+
+    action(verificationCode);
   };
 
   useEffect(() => {
