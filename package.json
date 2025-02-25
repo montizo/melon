@@ -26,5 +26,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
     "typescript": "^5"
+  },
+  "prisma": {
+    "schema": "src/lib/db/prisma/schema.prisma"
   }
 }

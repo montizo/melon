@@ -1,7 +1,13 @@
 "use client";
 
 import verifyEmailAction from "@/app/(auth)/verify-email/actions";
-import { useActionState, useEffect, useRef, useState } from "react";
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export default function VerifyEmail() {
   const [state, action] = useActionState(verifyEmailAction, null);
@@ -29,23 +35,18 @@ export default function VerifyEmail() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const verificationCode = code.join("");
 
-    action(verificationCode);
+    startTransition(async () => {
+      await action(verificationCode);
+    });
   };
 
   useEffect(() => {
-    if (code.every((digit) => digit !== "")) {
-      const syntheticEvent = new Event("submit", {
-        bubbles: true,
-        cancelable: true,
-      });
-      const form = document.createElement("form");
-      form.dispatchEvent(syntheticEvent);
-    }
-  }, [code]);
+    inputRefs.current[0]?.focus();
+  }, []);
 
   return (
     <form onSubmit={handleSubmit}>

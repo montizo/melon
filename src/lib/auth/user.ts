@@ -1,4 +1,5 @@
 import prisma from "../db/prisma/prisma";
+import crypto from "crypto";
 import bcrypt from "bcryptjs";
 
 export async function isEmailOrUsernameTaken(
@@ -24,11 +25,13 @@ export async function createUser(
   email: string;
 }> {
   const passwordHash = await bcrypt.hash(password, 12);
+  const verifyCode = crypto.randomBytes(4).toString("hex");
   const newUser = await prisma.user.create({
     data: {
       username: username,
       email: email,
       passwordHash: passwordHash,
+      verifyCode: verifyCode,
     },
   });
   const { passwordHash: _, ...userWithoutPassword } = newUser;
@@ -39,6 +42,14 @@ export async function getUserByEmail(email: string) {
   return prisma.user.findFirst({
     where: {
       email: email,
+    },
+  });
+}
+
+export async function getUserById(id: string) {
+  return prisma.user.findUnique({
+    where: {
+      id: id,
     },
   });
 }
