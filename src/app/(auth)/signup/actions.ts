@@ -2,6 +2,7 @@
 
 import { setSessionCookie } from "@/lib/auth/session";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
+import { redirect } from "next/navigation";
 
 export default async function signupAction(
   _: any,
@@ -27,6 +28,7 @@ export default async function signupAction(
   const user = await createUser(username, email, password);
   await setSessionCookie(user.id);
 
+  redirect("/verify-email");
   return { message: "Sign up successful", success: true };
 }
 
