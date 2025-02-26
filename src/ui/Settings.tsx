@@ -1,6 +1,6 @@
 "use client";
 
-import settingsAction from "@/app/settings/actions";
+import changePassword from "@/app/settings/actions";
 import Input from "@/components/Input";
 import LogoutButton from "@/components/LogoutButton/LogoutButton";
 import { passwordSchema } from "@/lib/validation";
@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
 
 export default function Settings({ username }: { username: string }) {
-  const [state, action, isLoading] = useActionState(settingsAction, null);
+  const [state, action, isLoading] = useActionState(changePassword, null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");

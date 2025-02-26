@@ -6,7 +6,7 @@ import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
 
-export default async function settingsAction(
+export default async function changePasswordAction(
   _: any,
   formData: FormData
 ): Promise<{ message: string; success: boolean }> {
@@ -39,7 +39,7 @@ export default async function settingsAction(
 
   const passwordHash = await bcrypt.hash(newPassword, 12);
 
-  prisma.user.update({
+  await prisma.user.update({
     where: { id: user.id },
     data: {
       passwordHash: passwordHash,
