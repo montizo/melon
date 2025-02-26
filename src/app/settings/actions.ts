@@ -3,6 +3,7 @@
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
+import { passwordSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
 
 export default async function settingsAction(
@@ -18,6 +19,12 @@ export default async function settingsAction(
 
   if (newPassword !== confirmPassword) {
     return { message: "Passwords do not match", success: false };
+  }
+  if (
+    passwordSchema.safeParse(newPassword).success === false ||
+    passwordSchema.safeParse(confirmPassword).success === false
+  ) {
+    return { message: "Invalid password", success: false };
   }
 
   const session = await getCurrentSession();
