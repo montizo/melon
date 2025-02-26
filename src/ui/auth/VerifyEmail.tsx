@@ -10,7 +10,7 @@ import {
 } from "react";
 
 export default function VerifyEmail() {
-  const [state, action] = useActionState(verifyEmailAction, null);
+  const [state, action, isLoading] = useActionState(verifyEmailAction, null);
   const [code, setCode] = useState(new Array(8).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const error = "";
@@ -66,7 +66,9 @@ export default function VerifyEmail() {
         ))}
       </div>
       {error && <p>{error}</p>}
-      <button type="submit">Verify Email</button>
+      <button type="submit" disabled={isLoading}>
+        Verify Email
+      </button>
     </form>
   );
 }

@@ -3,6 +3,7 @@
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
+import { redirect } from "next/navigation";
 
 export default async function verifyEmailAction(_: any, code: string) {
   const session = await getCurrentSession();
@@ -25,4 +26,6 @@ export default async function verifyEmailAction(_: any, code: string) {
       verifyCode: null,
     },
   });
+
+  redirect("/");
 }

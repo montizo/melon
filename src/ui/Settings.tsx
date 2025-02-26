@@ -3,10 +3,11 @@
 import settingsAction from "@/app/settings/actions";
 import Input from "@/components/Input";
 import { passwordSchema } from "@/lib/validation";
+import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
 
 export default function Settings({ username }: { username: string }) {
-  const [state, action] = useActionState(settingsAction, null);
+  const [state, action, isLoading] = useActionState(settingsAction, null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -23,6 +24,7 @@ export default function Settings({ username }: { username: string }) {
 
   return (
     <div>
+      <Link href="/">Home</Link>
       <h1>Settings</h1>
       <p>
         Hello, <strong>{username}</strong>!
@@ -51,7 +53,9 @@ export default function Settings({ username }: { username: string }) {
           }}
         />
         {error && <p>{error}</p>}
-        <button type="submit">Change password</button>
+        <button type="submit" disabled={isLoading}>
+          Change password
+        </button>
       </form>
     </div>
   );

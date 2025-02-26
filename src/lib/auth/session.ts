@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 
 export async function setSessionCookie(userId: string) {
   const sessionToken = await generateSessionToken();
-  console.log("User id:", userId);
   const session = await createSession(sessionToken, userId);
   const cookieStore = await cookies();
 
@@ -13,7 +12,7 @@ export async function setSessionCookie(userId: string) {
     path: "/",
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: session.expiresAt,
+    maxAge: (session.expiresAt - Date.now()) / 1000,
   });
 }
 
