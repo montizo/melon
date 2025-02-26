@@ -2,6 +2,7 @@
 
 import { setSessionCookie } from "@/lib/auth/session";
 import { getUserByEmail } from "@/lib/auth/user";
+import { emailSchema, passwordSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
 
 export default async function loginAction(_: any, formData: FormData) {
@@ -10,6 +11,13 @@ export default async function loginAction(_: any, formData: FormData) {
 
   if (typeof email !== "string" || typeof password !== "string") {
     return { message: "Invalid input fields", success: false };
+  }
+
+  if (emailSchema.safeParse(email).success === false) {
+    return { message: "Invalid email", success: false };
+  }
+  if (passwordSchema.safeParse(password).success === false) {
+    return { message: "Invalid password", success: false };
   }
 
   const user = await getUserByEmail(email);

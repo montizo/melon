@@ -2,6 +2,7 @@
 
 import { setSessionCookie } from "@/lib/auth/session";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
+import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
 import { redirect } from "next/navigation";
 
 export default async function signupAction(
@@ -18,6 +19,16 @@ export default async function signupAction(
     typeof password !== "string"
   ) {
     return { message: "Invalid input fields", success: false };
+  }
+
+  if (usernameShema.safeParse(username).success === false) {
+    return { message: "Invalid username", success: false };
+  }
+  if (emailSchema.safeParse(email).success === false) {
+    return { message: "Invalid email", success: false };
+  }
+  if (passwordSchema.safeParse(password).success === false) {
+    return { message: "Invalid password", success: false };
   }
 
   const uniqueFields = await isEmailOrUsernameTaken(email, username);
