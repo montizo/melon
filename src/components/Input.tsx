@@ -8,6 +8,7 @@ export default function Input({
   placeholder = "",
   validation,
   checkExists,
+  onAction,
 }: {
   label: string;
   type: string;
@@ -15,6 +16,7 @@ export default function Input({
   placeholder?: string;
   validation?: ZodString;
   checkExists?: (value: string) => Promise<boolean>;
+  onAction?: (e: any) => void;
 }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -37,6 +39,7 @@ export default function Input({
         onBlur={() => setShowError(true)}
         onChange={async (e) => {
           const inputValue = e.target.value;
+          onAction && onAction(e);
           setValue(inputValue);
           if (checkExists && error === "") {
             const exists = await checkExists(inputValue);
