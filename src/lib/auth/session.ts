@@ -16,6 +16,20 @@ export async function setSessionCookie(userId: string) {
   });
 }
 
+export async function deleteSessionCookie() {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("session");
+  if (!sessionCookie) {
+    return { message: "No session found", success: false };
+  }
+
+  cookieStore.delete("session");
+
+  await redis.del(`session:${sessionCookie.value}`);
+
+  return { message: "Session deleted successfully", success: true };
+}
+
 export async function getCurrentSession(): Promise<
   { message: string; userId: string } | { message: string; userId: null }
 > {

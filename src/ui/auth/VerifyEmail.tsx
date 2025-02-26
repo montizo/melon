@@ -62,6 +62,7 @@ export default function VerifyEmail() {
             value={digit}
             onChange={(e) => handleChange(index, e.target.value)}
             onKeyDown={(e) => handleKeyDown(index, e)}
+            style={{ width: "25px", height: "25px" }}
           />
         ))}
       </div>

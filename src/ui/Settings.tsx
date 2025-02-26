@@ -2,6 +2,7 @@
 
 import settingsAction from "@/app/settings/actions";
 import Input from "@/components/Input";
+import LogoutButton from "@/components/LogoutButton/LogoutButton";
 import { passwordSchema } from "@/lib/validation";
 import Link from "next/link";
 import { useActionState, useEffect, useState } from "react";
@@ -57,6 +58,8 @@ export default function Settings({ username }: { username: string }) {
           Change password
         </button>
       </form>
+      <hr />
+      <LogoutButton />
     </div>
   );
 }
