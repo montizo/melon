@@ -3,12 +3,22 @@
 import { setSessionCookie } from "@/lib/auth/session";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
+import { checkRateLimit } from "@/utils/checkRateLimit";
 import { redirect } from "next/navigation";
 
 export default async function signupAction(
   _: any,
   formData: FormData
 ): Promise<{ message: string; success: boolean }> {
+  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
+
+  if (isRateLimited) {
+    return {
+      message: "Too many POST requests. Try again later.",
+      success: false,
+    };
+  }
+
   const username = formData.get("username");
   const email = formData.get("email");
   const password = formData.get("password");

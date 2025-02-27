@@ -4,12 +4,22 @@ import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
+import { checkRateLimit } from "@/utils/checkRateLimit";
 import bcrypt from "bcryptjs";
 
 export default async function changePasswordAction(
   _: any,
   formData: FormData
 ): Promise<{ message: string; success: boolean }> {
+  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
+
+  if (isRateLimited) {
+    return {
+      message: "Too many POST requests. Try again later.",
+      success: false,
+    };
+  }
+
   const newPassword = formData.get("newpassword");
   const confirmPassword = formData.get("confirmpassword");
 
