@@ -1,5 +1,6 @@
 "use server";
 
+import { ActionResult } from "@/app/types";
 import { setSessionCookie } from "@/lib/auth/session";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
@@ -9,7 +10,7 @@ import { redirect } from "next/navigation";
 export default async function signupAction(
   _: any,
   formData: FormData
-): Promise<{ message: string; success: boolean }> {
+): Promise<ActionResult> {
   const { isRateLimited } = await checkRateLimit("POST", 100, 60);
 
   if (isRateLimited) {

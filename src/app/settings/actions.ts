@@ -6,11 +6,12 @@ import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
 import { checkRateLimit } from "@/utils/checkRateLimit";
 import bcrypt from "bcryptjs";
+import { ActionResult } from "../types";
 
 export default async function changePasswordAction(
   _: any,
   formData: FormData
-): Promise<{ message: string; success: boolean }> {
+): Promise<ActionResult> {
   const { isRateLimited } = await checkRateLimit("POST", 100, 60);
 
   if (isRateLimited) {

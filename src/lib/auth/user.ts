@@ -38,6 +38,14 @@ export async function createUser(
   return userWithoutPassword;
 }
 
+export async function getUserByUsername(username: string) {
+  return prisma.user.findFirst({
+    where: {
+      username: username,
+    },
+  });
+}
+
 export async function getUserByEmail(email: string) {
   return prisma.user.findFirst({
     where: {

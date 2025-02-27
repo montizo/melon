@@ -1,5 +1,6 @@
 "use server";
 
+import { ActionResult } from "@/app/types";
 import { setSessionCookie } from "@/lib/auth/session";
 import { getUserByEmail } from "@/lib/auth/user";
 import { emailSchema } from "@/lib/validation";
@@ -7,7 +8,10 @@ import { checkRateLimit } from "@/utils/checkRateLimit";
 import exponentialBackoff from "@/utils/exponentialBackoff";
 import bcrypt from "bcryptjs";
 
-export default async function loginAction(_: any, formData: FormData) {
+export default async function loginAction(
+  _: any,
+  formData: FormData
+): Promise<ActionResult> {
   const { isRateLimited } = await checkRateLimit("POST", 100, 60);
 
   if (isRateLimited) {
