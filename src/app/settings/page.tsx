@@ -19,9 +19,9 @@ export default async function SettingsPage() {
   if (!user) {
     redirect("/login");
   }
-  // if (!user.isVerified) {
-  //   redirect("/verify-email");
-  // }
+  if (!user.isVerified) {
+    redirect("/verify-email");
+  }
 
   return <Settings username={user.username} />;
 }

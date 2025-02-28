@@ -7,6 +7,7 @@ import { emailSchema } from "@/lib/validation";
 import { checkRateLimit } from "@/utils/checkRateLimit";
 import exponentialBackoff from "@/utils/exponentialBackoff";
 import bcrypt from "bcryptjs";
+import { headers } from "next/headers";
 
 export default async function loginAction(
   _: any,
@@ -53,7 +54,13 @@ export default async function loginAction(
     return { message: "Invalid credentials", success: false };
   }
 
-  await setSessionCookie(user.id);
+  const reqHeaders = await headers();
+  const ipAddress =
+    process.env.NODE_ENV === "production"
+      ? (reqHeaders.get("x-forwarded-for") ?? "127.0.0.1").split(",")[0]
+      : "127.0.0.1";
+
+  await setSessionCookie(user.id, ipAddress);
 
   return { message: "Login successful", success: true };
 }
