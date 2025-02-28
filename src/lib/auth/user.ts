@@ -8,7 +8,20 @@ export async function isEmailOrUsernameTaken(
 ): Promise<boolean> {
   const user = await prisma.user.findFirst({
     where: {
-      OR: [{ email: email }, { username: username }],
+      OR: [
+        {
+          email: {
+            equals: email.toLowerCase(),
+            mode: "insensitive",
+          },
+        },
+        {
+          username: {
+            equals: username.toLowerCase(),
+            mode: "insensitive",
+          },
+        },
+      ],
     },
   });
 
@@ -41,7 +54,10 @@ export async function createUser(
 export async function getUserByUsername(username: string) {
   return prisma.user.findFirst({
     where: {
-      username: username,
+      username: {
+        equals: username,
+        mode: "insensitive",
+      },
     },
   });
 }
