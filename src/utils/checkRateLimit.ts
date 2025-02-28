@@ -5,7 +5,7 @@ export async function checkRateLimit(
   method: "GET" | "POST",
   limit: number = 100,
   windowSeconds: number = 60
-) {
+): Promise<boolean> {
   const header = await headers();
 
   const ip =
@@ -16,8 +16,8 @@ export async function checkRateLimit(
   const rateLimitResult = await rateLimit(ip, method, limit, windowSeconds);
 
   if (!rateLimitResult.success) {
-    return { isRateLimited: true, message: rateLimitResult.message };
+    return true;
   }
 
-  return { isRateLimited: false, message: "" };
+  return false;
 }

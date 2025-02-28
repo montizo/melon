@@ -13,9 +13,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isRateLimited, message } = await checkRateLimit("GET", 100, 60);
+  const isRateLimited = await checkRateLimit("GET", 100, 60);
   if (isRateLimited) {
-    return <h1>{message}</h1>;
+    return <h1>To many GET requests. Try again later.</h1>;
   }
 
   return (

@@ -8,15 +8,6 @@ import { checkRateLimit } from "@/utils/checkRateLimit";
 export async function getProfileAction(
   username: string
 ): GetProfileActionResult {
-  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
-
-  if (isRateLimited) {
-    return {
-      message: "Too many POST requests. Try again later.",
-      success: false,
-    };
-  }
-
   const user = await getUserByUsername(username);
   if (!user) {
     return { message: "User not found", success: false };
@@ -46,15 +37,6 @@ export async function setProfileBio(
   username: string,
   newText: string
 ): Promise<ActionResult> {
-  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
-
-  if (isRateLimited) {
-    return {
-      message: "Too many POST requests. Try again later.",
-      success: false,
-    };
-  }
-
   await prisma.user.update({ where: { username }, data: { bio: newText } });
   return { message: "Successfully changed bio", success: true };
 }

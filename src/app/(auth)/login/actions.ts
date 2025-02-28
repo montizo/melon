@@ -13,15 +13,6 @@ export default async function loginAction(
   _: any,
   formData: FormData
 ): Promise<ActionResult> {
-  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
-
-  if (isRateLimited) {
-    return {
-      message: "Too many POST requests. Try again later.",
-      success: false,
-    };
-  }
-
   const email = formData.get("email");
   const password = formData.get("password");
 

@@ -7,15 +7,6 @@ import { checkRateLimit } from "@/utils/checkRateLimit";
 import { redirect } from "next/navigation";
 
 export default async function verifyEmailAction(_: any, code: string) {
-  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
-
-  if (isRateLimited) {
-    return {
-      message: "Too many POST requests. Try again later.",
-      success: false,
-    };
-  }
-
   const session = await getCurrentSession();
   if (session.userId === null) {
     return;

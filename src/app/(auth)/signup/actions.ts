@@ -12,15 +12,6 @@ export default async function signupAction(
   _: any,
   formData: FormData
 ): Promise<ActionResult> {
-  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
-
-  if (isRateLimited) {
-    return {
-      message: "Too many POST requests. Try again later.",
-      success: false,
-    };
-  }
-
   const username = formData.get("username");
   const email = formData.get("email");
   const password = formData.get("password");
