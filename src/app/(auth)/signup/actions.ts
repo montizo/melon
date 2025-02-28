@@ -5,6 +5,7 @@ import { setSessionCookie } from "@/lib/auth/session";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
 import { checkRateLimit } from "@/utils/checkRateLimit";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function signupAction(
@@ -47,8 +48,14 @@ export default async function signupAction(
     return { message: "Email or username already taken", success: false };
   }
 
+  const reqHeaders = await headers();
+  const ipAddress =
+    process.env.NODE_ENV === "production"
+      ? (reqHeaders.get("x-forwarded-for") ?? "127.0.0.1").split(",")[0]
+      : "127.0.0.1";
+
   const user = await createUser(username, email, password);
-  await setSessionCookie(user.id);
+  await setSessionCookie(user.id, ipAddress);
 
   redirect("/verify-email");
   return { message: "Sign up successful", success: true };

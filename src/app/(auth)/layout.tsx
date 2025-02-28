@@ -5,10 +5,5 @@ export default async function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <main>
-      <Link href="/">Home</Link>
-      {children}
-    </main>
-  );
+  return <main>{children}</main>;
 }

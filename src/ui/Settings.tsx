@@ -25,7 +25,6 @@ export default function Settings({ username }: { username: string }) {
 
   return (
     <div>
-      <Link href="/">Home</Link>
       <h1>Settings</h1>
       <p>
         Hello, <strong>{username}</strong>!

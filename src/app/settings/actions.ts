@@ -57,7 +57,5 @@ export default async function changePasswordAction(
     },
   });
 
-  console.log(newPassword, confirmPassword);
-
   return { message: "Passwor changed successful", success: true };
 }
