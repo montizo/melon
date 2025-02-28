@@ -14,10 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body>
-        <Link href="/">Home</Link>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

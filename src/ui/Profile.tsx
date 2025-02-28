@@ -3,6 +3,7 @@
 import { ActionResult } from "@/app/types";
 import { setProfileBio } from "@/app/profile/[username]/actions";
 import { useActionState, useState } from "react";
+import Navbar from "@/components/Navbar";
 
 type ProfileProps = {
   profile: {
