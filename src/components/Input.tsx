@@ -29,8 +29,10 @@ export default function Input({
   }, [value]);
 
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
+    <div className="grid gap-2">
+      <label htmlFor={name} className="text-sm font-semibold">
+        {label}
+      </label>
       <input
         id={name}
         type={type}
@@ -51,8 +53,13 @@ export default function Input({
             }
           }
         }}
+        className={`w-full px-3 py-1 border-[1px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
+          error == "" || !showError
+            ? `bg-[#181818] border-[#222222] placeholder-[#4d4d4d] focus:border-[#444444]`
+            : `bg-[#181111] border-[#7B271A] placeholder-[#5b251a] focus:border-[#9b291a]`
+        }`}
       />
-      {error && showError && <p>{error}</p>}
+      {error && showError && <p className="text-[#df4f51] text-sm">{error}</p>}
     </div>
   );
 }

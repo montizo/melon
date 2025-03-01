@@ -13,14 +13,12 @@ body {
   @apply bg-background text-secondary;
 }
 
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
 
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
 }

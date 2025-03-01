@@ -10,9 +10,12 @@ export default function LoginForm() {
   const [state, action, isLoading] = useActionState(loginAction, null);
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form action={action}>
+    <div className="bg-[#181818] border-[1.5px] border-[#222222] p-8 rounded-2xl w-full max-w-md grid gap-8">
+      <div className="grid gap1">
+        <h2 className="font-semibold text-3xl text-[#fafafa]">Welcome back</h2>
+        <p>Login to your account</p>
+      </div>
+      <form action={action} className="grid gap-4">
         <Input
           label="Email"
           type="text"
@@ -26,7 +29,11 @@ export default function LoginForm() {
           name="password"
           placeholder="●●●●●●"
         />
-        <button type="submit" disabled={isLoading}>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="cursor-pointer px-3 py-1 rounded-md font-semibold bg-[#822929] border-[#9f3a3a] border-1 hocus:brightness-125 duration-300"
+        >
           Login
         </button>
       </form>
