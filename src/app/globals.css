@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@custom-variant hocus (&:hover, &:focus);
+
+@theme {
+  --color-primary: #fafafa;
+  --color-secondary: #d1d1d1;
+  --color-background: #111111;
+  --color-secondary-background: #181818;
+}
+
+body {
+  @apply bg-background text-secondary;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
