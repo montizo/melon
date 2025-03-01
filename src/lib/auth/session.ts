@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import generateRandomString from "@/utils/randomString";
 import redis from "../db/redis";
 import { cookies, headers } from "next/headers";
 
@@ -90,7 +90,7 @@ export async function getCurrentSession(): Promise<{
 }
 
 export async function generateSessionToken(): Promise<string> {
-  return crypto.randomBytes(32).toString("hex");
+  return generateRandomString(32);
 }
 
 export async function createSession(

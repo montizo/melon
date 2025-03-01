@@ -1,6 +1,6 @@
 import prisma from "../db/prisma/prisma";
-import crypto from "crypto";
 import bcrypt from "bcryptjs";
+import generateRandomString from "@/utils/randomString";
 
 export async function isEmailOrUsernameTaken(
   email: string,
@@ -38,7 +38,7 @@ export async function createUser(
   email: string;
 }> {
   const passwordHash = await bcrypt.hash(password, 12);
-  const verifyCode = crypto.randomBytes(4).toString("hex");
+  const verifyCode = generateRandomString(8);
   const newUser = await prisma.user.create({
     data: {
       username: username,
