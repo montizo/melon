@@ -4,7 +4,6 @@ import { ActionResult } from "@/app/types";
 import { setSessionCookie } from "@/lib/auth/session";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
-import { checkRateLimit } from "@/utils/checkRateLimit";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 

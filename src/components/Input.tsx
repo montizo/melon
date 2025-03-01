@@ -22,7 +22,6 @@ export default function Input({
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [showError, setShowError] = useState(false);
-  const [exists, setExists] = useState(false);
 
   useEffect(() => {
     const result = validation?.safeParse(value);
@@ -46,7 +45,6 @@ export default function Input({
           setValue(inputValue);
           if (checkExists && error === "") {
             const exists = await checkExists(inputValue);
-            setExists(exists);
             if (exists) {
               setError(`${label} already taken`);
             } else {
