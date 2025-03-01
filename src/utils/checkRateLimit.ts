@@ -1,3 +1,5 @@
+"use server";
+
 import { headers } from "next/headers";
 import rateLimit from "./rateLimit";
 
@@ -15,7 +17,7 @@ export async function checkRateLimit(
 
   const rateLimitResult = await rateLimit(ip, method, limit, windowSeconds);
 
-  if (!rateLimitResult.success) {
+  if (!rateLimitResult) {
     return true;
   }
 
