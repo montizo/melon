@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Input from "@/components/Input";
 import Link from "next/link";
 import { useActionState } from "react";
@@ -29,16 +30,21 @@ export default function LoginForm() {
           name="password"
           placeholder="●●●●●●"
         />
-        <button
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           type="submit"
           disabled={isLoading}
           className="cursor-pointer px-3 py-1 rounded-md font-semibold bg-[#822929] border-[#9f3a3a] border-1 hocus:brightness-125 duration-300"
         >
           Login
-        </button>
+        </motion.button>
       </form>
       <p>
-        Don't have an account? <Link href="/signup">Sign Up</Link>
+        Don't have an account?{" "}
+        <Link href="/signup" className="text-[#df3f3f] hocus:underline">
+          Sign Up
+        </Link>
       </p>
     </div>
   );
