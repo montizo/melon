@@ -12,10 +12,10 @@ export default function Form({
 }: {
   formAction: any;
   title: string;
-  subTitle: string;
+  subTitle?: string;
   buttonText: string;
   children: ReactNode;
-  footer: {
+  footer?: {
     text: string;
     linkText: string;
     linkTo: string;
@@ -41,12 +41,14 @@ export default function Form({
           {buttonText}
         </motion.button>
       </form>
-      <p>
-        {footer.text}{" "}
-        <Link href={footer.linkTo} className="text-[#df3f3f] hocus:underline">
-          {footer.linkText}
-        </Link>
-      </p>
+      {footer && (
+        <p>
+          {footer.text}{" "}
+          <Link href={footer.linkTo} className="text-[#df3f3f] hocus:underline">
+            {footer.linkText}
+          </Link>
+        </p>
+      )}
     </div>
   );
 }

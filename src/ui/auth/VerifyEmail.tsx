@@ -1,6 +1,7 @@
 "use client";
 
 import verifyEmailAction from "@/app/(auth)/verify-email/actions";
+import Form from "@/components/Form";
 import {
   startTransition,
   useActionState,
@@ -35,8 +36,7 @@ export default function VerifyEmail() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const verificationCode = code.join("");
 
     startTransition(async () => {
@@ -49,8 +49,12 @@ export default function VerifyEmail() {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <Form
+      formAction={handleSubmit}
+      title="Verify Email"
+      buttonText="Verify Email"
+    >
+      <div className="flex justify-between">
         {code.map((digit, index) => (
           <input
             key={index}
@@ -62,14 +66,10 @@ export default function VerifyEmail() {
             value={digit}
             onChange={(e) => handleChange(index, e.target.value)}
             onKeyDown={(e) => handleKeyDown(index, e)}
-            style={{ width: "25px", height: "25px" }}
+            className="border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 bg-[#181818] border-[#222222] placeholder-[#4d4d4d] focus:border-[#444444] w-10 h-10 text-center"
           />
         ))}
       </div>
-      {error && <p>{error}</p>}
-      <button type="submit" disabled={isLoading}>
-        Verify Email
-      </button>
-    </form>
+    </Form>
   );
 }

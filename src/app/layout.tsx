@@ -19,8 +19,8 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en" className="h-full flex-center">
-      <body className="h-full w-full flex-center">{children}</body>
+    <html lang="en" className="h-full">
+      <body className="h-full w-full">{children}</body>
     </html>
   );
 }
