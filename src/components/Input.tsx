@@ -54,7 +54,7 @@ export default function Input({
             }
           }
         }}
-        className={`w-full px-3 py-1 border-[1px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 mb-2 ${
+        className={`w-full px-3 py-1 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
           error == "" || !showError
             ? `bg-[#181818] border-[#222222] placeholder-[#4d4d4d] focus:border-[#444444]`
             : `bg-[#181111] border-[#7B271A] placeholder-[#5b251a] focus:border-[#9b291a]`
@@ -63,9 +63,9 @@ export default function Input({
       <AnimatePresence>
         {error && showError && (
           <motion.p
-            initial={{ height: 0, opacity: 0, rotateX: -90 }}
-            animate={{ height: "auto", opacity: 1, rotateX: 0 }}
-            exit={{ height: 0, opacity: 0, rotateX: 0 }}
+            initial={{ marginTop: 0, height: 0, opacity: 0, rotateX: -90 }}
+            animate={{ marginTop: 8, height: "auto", opacity: 1, rotateX: 0 }}
+            exit={{ marginTop: 0, height: 0, opacity: 0, rotateX: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="text-[#df4f51] text-sm"
           >
