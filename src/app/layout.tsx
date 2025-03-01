@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import "./globals.css";
-import Link from "next/link";
 import { checkRateLimit } from "@/utils/checkRateLimit";
+import Navbar from "@/components/Navbar";
+import { getCurrentSession } from "@/lib/auth/session";
+import { getUserById } from "@/lib/auth/user";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,9 +20,16 @@ export default async function RootLayout({
     return <h1>To many GET requests. Try again later.</h1>;
   }
 
+  const session = await getCurrentSession();
+
+  const user = session?.userId ? await getUserById(session.userId) : null;
+
   return (
     <html lang="en" className="h-full">
-      <body className="h-full w-full">{children}</body>
+      <body className="h-full w-full">
+        <Navbar username={user?.username ?? null} />
+        {children}
+      </body>
     </html>
   );
 }

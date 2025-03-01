@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const usernameShema = z
   .string()
-  .min(5, "Username must be at least 5 character")
+  .min(5, "Username must be at least 5 characters")
   .max(30, "Username must be less than 30 characters")
   .regex(
     /^[A-Za-z0-9-_]+$/,

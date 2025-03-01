@@ -48,7 +48,6 @@ export default async function signupAction(
   await setSessionCookie(user.id, ipAddress);
 
   redirect("/verify-email");
-  return { message: "Sign up successful", success: true };
 }
 
 export async function checkEmailNotTaken(email: string) {

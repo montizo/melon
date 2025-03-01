@@ -37,8 +37,8 @@ export default function Settings({ username }: { username: string }) {
           name="newpassword"
           placeholder="●●●●●●"
           validation={passwordSchema}
-          onAction={(e) => {
-            setPassword(e.target.value);
+          setExternalUseState={(value) => {
+            setPassword(value);
           }}
         />
         <Input
@@ -47,8 +47,8 @@ export default function Settings({ username }: { username: string }) {
           name="confirmpassword"
           placeholder="●●●●●●"
           validation={passwordSchema}
-          onAction={(e) => {
-            setConfirmPassword(e.target.value);
+          setExternalUseState={(value) => {
+            setConfirmPassword(value);
           }}
         />
         {error && <p>{error}</p>}

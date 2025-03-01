@@ -12,15 +12,6 @@ export default async function changePasswordAction(
   _: any,
   formData: FormData
 ): Promise<ActionResult> {
-  const { isRateLimited } = await checkRateLimit("POST", 100, 60);
-
-  if (isRateLimited) {
-    return {
-      message: "Too many POST requests. Try again later.",
-      success: false,
-    };
-  }
-
   const newPassword = formData.get("newpassword");
   const confirmPassword = formData.get("confirmpassword");
 

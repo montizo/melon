@@ -1,10 +1,37 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar({ username }: { username: string | null }) {
+  const pathName = usePathname();
+
+  if (
+    pathName == "/login" ||
+    pathName == "/signup" ||
+    pathName == "/verify-email"
+  ) {
+    return (
+      <header className="absolute flex-center h-14">
+        <nav className="flex-between w-full max-w-6xl m-x-4 mx-8">
+          <Link
+            href="/"
+            className="font-bold text-lg hocus:text-white duration-300"
+          >
+            Logo
+          </Link>
+        </nav>
+      </header>
+    );
+  }
+
   return (
     <header className="flex-center bg-[#181818] h-14">
       <nav className="flex-between w-full max-w-6xl m-x-4 mx-8">
-        <Link href="/" className="font-bold text-lg hocus:text-white">
+        <Link
+          href="/"
+          className="font-bold text-lg hocus:text-white duration-300"
+        >
           Logo
         </Link>
         {username == null && (
@@ -24,9 +51,19 @@ export default function Navbar({ username }: { username: string | null }) {
           </div>
         )}
         {typeof username == "string" && (
-          <div>
-            <Link href={`/profile/${username}`}>Profile</Link>
-            <Link href="/settings">Settings</Link>
+          <div className="flex gap-2">
+            <Link
+              href={`/profile/${username}`}
+              className="hocus:brightness-125 duration-300"
+            >
+              Profile
+            </Link>
+            <Link
+              href="/settings"
+              className="hocus:brightness-125 duration-300"
+            >
+              Settings
+            </Link>
           </div>
         )}
       </nav>

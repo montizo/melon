@@ -2,6 +2,7 @@ import { getProfileAction } from "@/app/profile/[username]/actions";
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
 import Profile from "@/ui/Profile";
+import React from "react";
 export default async function ProfilePage({
   params,
 }: {
@@ -16,7 +17,11 @@ export default async function ProfilePage({
   const profileResult = await getProfileAction(username);
 
   if ("success" in profileResult && !profileResult.success) {
-    return <div>{profileResult.message}</div>;
+    return (
+      <>
+        <div>{profileResult.message}</div>
+      </>
+    );
   }
 
   if ("username" in profileResult) {

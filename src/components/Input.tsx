@@ -9,7 +9,7 @@ export default function Input({
   placeholder = "",
   validation,
   checkExists,
-  onAction,
+  setExternalUseState,
 }: {
   label: string;
   type: string;
@@ -17,7 +17,7 @@ export default function Input({
   placeholder?: string;
   validation?: ZodString;
   checkExists?: (value: string) => Promise<boolean>;
-  onAction?: (e: any) => void;
+  setExternalUseState?: (value: string) => void;
 }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -25,7 +25,22 @@ export default function Input({
 
   useEffect(() => {
     const result = validation?.safeParse(value);
-    setError(result?.error?.errors[0]?.message || "");
+    const validationErrors = result?.error?.errors[0]?.message || "";
+
+    setError(validationErrors);
+    setExternalUseState && setExternalUseState(value);
+
+    if (checkExists && validationErrors == "") {
+      (async () => {
+        const exists = await checkExists(value);
+
+        if (exists) {
+          setError(`${label} already taken`);
+        } else {
+          setError("");
+        }
+      })();
+    }
   }, [value]);
 
   return (
@@ -39,18 +54,9 @@ export default function Input({
         name={name}
         placeholder={placeholder}
         onBlur={() => setShowError(true)}
-        onChange={async (e) => {
+        onChange={(e) => {
           const inputValue = e.target.value;
-          onAction && onAction(e);
           setValue(inputValue);
-          if (checkExists && error === "") {
-            const exists = await checkExists(inputValue);
-            if (exists) {
-              setError(`${label} already taken`);
-            } else {
-              setError("");
-            }
-          }
         }}
         className={`w-full px-3 py-1 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
           error == "" || !showError
