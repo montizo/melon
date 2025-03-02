@@ -6,15 +6,12 @@ import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
 import { ActionResult } from "@/app/types";
+import { redirect } from "next/navigation";
 
 export default async function changePasswordAction(
   _: any,
   formData: FormData
 ): Promise<ActionResult> {
-  if (!formData) {
-    return { message: "No form data provided", success: false };
-  }
-
   const newPassword = formData.get("newpassword")?.toString();
   const confirmPassword = formData.get("confirmpassword")?.toString();
 
@@ -26,10 +23,7 @@ export default async function changePasswordAction(
     return { message: "Passwords do not match", success: false };
   }
 
-  if (
-    passwordSchema.safeParse(newPassword).success === false ||
-    passwordSchema.safeParse(confirmPassword).success === false
-  ) {
+  if (!passwordSchema.safeParse(newPassword).success) {
     return { message: "Invalid password", success: false };
   }
 
@@ -52,5 +46,5 @@ export default async function changePasswordAction(
     },
   });
 
-  return { message: "Password changed successfully", success: true };
+  redirect("/");
 }

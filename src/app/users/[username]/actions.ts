@@ -4,9 +4,7 @@ import { ActionResult } from "@/app/types";
 import { getUserByUsername } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
 
-export async function getProfileAction(
-  username: string
-): GetProfileActionResult {
+export async function getUsereAction(username: string): GetProfileActionResult {
   const user = await getUserByUsername(username);
   if (!user) {
     return { message: "User not found", success: false };

@@ -1,7 +1,7 @@
-import { getProfileAction } from "@/app/profile/[username]/actions";
+import { getUsereAction } from "@/app/users/[username]/actions";
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
-import Profile from "@/ui/Profile";
+import Profile from "@/ui/User";
 import React from "react";
 export default async function ProfilePage({
   params,
@@ -14,7 +14,7 @@ export default async function ProfilePage({
 
   const ownProfile = username == user?.username;
 
-  const profileResult = await getProfileAction(username);
+  const profileResult = await getUsereAction(username);
 
   if ("success" in profileResult && !profileResult.success) {
     return (

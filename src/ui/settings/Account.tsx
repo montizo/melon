@@ -7,7 +7,7 @@ import Input from "@/components/Input";
 import LogoutButton from "@/components/LogoutButton";
 import { passwordSchema } from "@/lib/validation";
 import { useActionState, useState, useEffect } from "react";
-import { useValidation } from "@/hooks/useValidation";
+import { useValidation } from "@/hooks/useValidation"; // Import custom hook
 
 export default function SettingsAccount({ username }: { username: string }) {
   const [state, action, isLoading] = useActionState(changePassword, null);
@@ -15,10 +15,12 @@ export default function SettingsAccount({ username }: { username: string }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const hasErrors = useValidation([
+  const fields = [
     { value: password, schema: passwordSchema },
     { value: confirmPassword, schema: passwordSchema },
-  ]);
+  ];
+
+  const hasErrors = useValidation(fields);
 
   const handlePasswordChange = (value: string) => setPassword(value);
   const handleConfirmPasswordChange = (value: string) =>
@@ -32,6 +34,14 @@ export default function SettingsAccount({ username }: { username: string }) {
     }
   }, [password, confirmPassword]);
 
+  const handleSubmit = async () => {
+    const formData = new FormData();
+    formData.append("newpassword", password);
+    formData.append("confirmpassword", confirmPassword);
+
+    await action(formData);
+  };
+
   return (
     <div className="h-[calc(100vh-56px)] flex-2 p-16">
       <h1 className="font-semibold text-3xl text-[#fafafa] mb-2">Account</h1>
@@ -39,7 +49,7 @@ export default function SettingsAccount({ username }: { username: string }) {
         Hello, <strong>{username}</strong>!
       </p>
       <Form
-        formAction={action}
+        formAction={handleSubmit}
         title="Change Password"
         buttonText="Change Password"
         buttonStyles="bg-[#242424] border-[#2e2e2e]"
