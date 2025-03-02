@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant hocus (&:hover, &:focus);
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-primary: #fafafa;
