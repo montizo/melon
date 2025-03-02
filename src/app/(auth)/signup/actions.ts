@@ -1,10 +1,10 @@
 "use server";
 
 import { ActionResult } from "@/app/types";
-import { setSessionCookie } from "@/lib/auth/session";
-import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
+import { getIpAddress, isUniqueEmailOrUsername, validateField } from "../utils";
 import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
-import { headers } from "next/headers";
+import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
+import { setSessionCookie } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
 
 export default async function signupAction(
@@ -15,45 +15,34 @@ export default async function signupAction(
   const email = formData.get("email");
   const password = formData.get("password");
 
-  if (
-    typeof email !== "string" ||
-    typeof username !== "string" ||
-    typeof password !== "string"
-  ) {
-    return { message: "Invalid input fields", success: false };
-  }
+  let error = validateField(username, usernameShema, "username");
+  if (error) return error;
 
-  if (usernameShema.safeParse(username).success === false) {
-    return { message: "Invalid username", success: false };
-  }
-  if (emailSchema.safeParse(email).success === false) {
-    return { message: "Invalid email", success: false };
-  }
-  if (passwordSchema.safeParse(password).success === false) {
-    return { message: "Invalid password", success: false };
-  }
+  error = validateField(email, emailSchema, "email");
+  if (error) return error;
 
-  const uniqueFields = await isEmailOrUsernameTaken(email, username);
-  if (uniqueFields) {
-    return { message: "Email or username already taken", success: false };
-  }
+  error = validateField(password, passwordSchema, "password");
+  if (error) return error;
 
-  const reqHeaders = await headers();
-  const ipAddress =
-    process.env.NODE_ENV === "production"
-      ? (reqHeaders.get("x-forwarded-for") ?? "127.0.0.1").split(",")[0]
-      : "127.0.0.1";
+  error = await isUniqueEmailOrUsername(email as string, username as string);
+  if (error) return error;
 
-  const user = await createUser(username, email, password);
-  await setSessionCookie(user.id, ipAddress);
+  const user = await createUser(
+    username as string,
+    email as string,
+    password as string
+  );
+  await setSessionCookie(user.id, await getIpAddress());
 
   redirect("/verify-email");
 }
 
-export async function checkEmailNotTaken(email: string) {
-  return isEmailOrUsernameTaken(email, "");
+export async function checkEmailNotTaken(email: string): Promise<boolean> {
+  return await isEmailOrUsernameTaken(email, "");
 }
 
-export async function checkUsernameNotTaken(username: string) {
-  return isEmailOrUsernameTaken("", username);
+export async function checkUsernameNotTaken(
+  username: string
+): Promise<boolean> {
+  return await isEmailOrUsernameTaken("", username);
 }
