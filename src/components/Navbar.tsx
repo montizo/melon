@@ -9,7 +9,8 @@ export default function Navbar({ username }: { username: string | null }) {
   if (
     pathName == "/login" ||
     pathName == "/signup" ||
-    pathName == "/verify-email"
+    pathName == "/verify-email" ||
+    pathName == "/forgot-password"
   ) {
     return (
       <header className="absolute flex-center h-14">
