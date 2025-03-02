@@ -52,9 +52,9 @@ export default function SettingsAccount({ username }: { username: string }) {
         formAction={handleSubmit}
         title="Change Password"
         buttonText="Change Password"
-        buttonStyles="bg-[#242424] border-[#2e2e2e]"
+        buttonStyles="bg-[#2d2d2d] border-[#3a3a3a]"
         width="auto"
-        buttonDisabled={hasErrors || isLoading}
+        buttonDisabled={hasErrors || isLoading || !!error}
       >
         <Input
           label="New password"

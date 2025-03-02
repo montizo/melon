@@ -87,8 +87,8 @@ export default function Input({
           onChange={handleChange}
           className={`w-full px-3 py-1 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
             error === "" || !showError
-              ? `bg-[#181818] border-[#222222] placeholder-[#4d4d4d] focus:border-[#444444]`
-              : `bg-[#181111] border-[#7B271A] placeholder-[#5b251a] focus:border-[#9b291a]`
+              ? `bg-[#242424] border-[#2e2e2e] placeholder-[#4d4d4d] focus:border-[#444444]`
+              : `bg-[#1C1412] border-[#7B271A] placeholder-[#521E17] focus:border-[#9b291a]`
           }`}
         />
       </div>

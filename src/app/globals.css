@@ -4,14 +4,15 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #fafafa;
-  --color-secondary: #d1d1d1;
-  --color-background: #111111;
+  --color-text-primary-dark: #b4b4b4;
+  --color-backdrop-main-dark: #171717;
+  --color-backdrop-secondary-dark: #1f1f1f;
+  --color-line-dark: #2e2e2e;
   --color-secondary-background: #181818;
 }
 
 body {
-  @apply bg-background text-secondary;
+  @apply bg-[#171717] text-[#b4b4b4];
 }
 
 @layer utilities {

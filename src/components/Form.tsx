@@ -31,7 +31,7 @@ export default function Form({
 
   return (
     <div
-      className={`bg-[#181818] border-[1.5px] border-[#222222] p-8 rounded-2xl w-full ${
+      className={`bg-[#1f1f1f] border-[1.5px] border-[#2e2e2e] p-8 rounded-2xl w-full ${
         width ? width : "max-w-md"
       } grid gap-8`}
     >

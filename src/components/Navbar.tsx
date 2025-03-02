@@ -26,7 +26,7 @@ export default function Navbar({ username }: { username: string | null }) {
   }
 
   return (
-    <header className="flex-center bg-[#111111] border-b-[1.5px] border-b-[#222222] h-14 fixed w-full">
+    <header className="flex-center bg-[#171717] border-b-[1.5px] border-b-[#2e2e2e] h-14 fixed w-full">
       <nav className="flex-between w-full max-w-6xl m-x-4 mx-8">
         <Link
           href="/"
@@ -38,7 +38,7 @@ export default function Navbar({ username }: { username: string | null }) {
           <div className="flex-center gap-x-2">
             <Link
               href="/login"
-              className="cursor-pointer px-3 py-1 rounded-xl bg-[#242424] border-[#2e2e2e] border-1 hocus:brightness-125 duration-300"
+              className="cursor-pointer px-3 py-1 rounded-xl bg-[#171717] border-[#2e2e2e] border-1 hocus:brightness-125 duration-300"
             >
               Login
             </Link>
@@ -53,13 +53,13 @@ export default function Navbar({ username }: { username: string | null }) {
         {typeof username == "string" && (
           <div className="flex gap-2">
             <Link
-              href={`/profile/${username}`}
+              href={`/users/${username}`}
               className="hocus:brightness-125 duration-300"
             >
               Profile
             </Link>
             <Link
-              href="/settings"
+              href="/settings/account"
               className="hocus:brightness-125 duration-300"
             >
               Settings
