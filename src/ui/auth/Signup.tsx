@@ -36,9 +36,6 @@ export default function SignupForm() {
         return;
       }
     })();
-
-    console.log(hasErrors);
-    console.log(username, email, password);
   }, [username, email, password]);
 
   return (
@@ -48,6 +45,7 @@ export default function SignupForm() {
       subTitle="Create a new account"
       buttonText="Signup"
       buttonDisabled={hasErrors}
+      buttonStyles="bg-[#822929] border-[#9f3a3a]"
       footer={{
         text: "Have an account?",
         linkText: "Login",

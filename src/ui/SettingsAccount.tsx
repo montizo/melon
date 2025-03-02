@@ -50,6 +50,7 @@ export default function SettingsAccount({ username }: { username: string }) {
         formAction={action}
         title="Change Password"
         buttonText="Change Password"
+        buttonStyles="bg-[#242424] border-[#2e2e2e]"
         width="auto"
         buttonDisabled={hasErrors || isLoading}
       >

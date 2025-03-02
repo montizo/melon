@@ -71,6 +71,7 @@ export default function VerifyEmail() {
       formAction={handleSubmit}
       title="Verify Email"
       buttonText="Verify Email"
+      buttonStyles="bg-[#822929] border-[#9f3a3a]"
     >
       <div className="flex justify-between">
         {code.map((digit, index) => (

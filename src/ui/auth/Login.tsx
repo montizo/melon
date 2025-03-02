@@ -26,6 +26,7 @@ export default function LoginForm() {
       subTitle="Login to your account"
       buttonText="Login"
       buttonDisabled={hasErrors}
+      buttonStyles="bg-[#822929] border-[#9f3a3a]"
       footer={{
         text: "Don't have an account?",
         linkText: "Sign Up",

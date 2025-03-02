@@ -8,6 +8,7 @@ export default function Form({
   subTitle,
   buttonText,
   buttonDisabled,
+  buttonStyles,
   children,
   footer,
   width,
@@ -17,6 +18,7 @@ export default function Form({
   subTitle?: string;
   buttonText: string;
   buttonDisabled?: boolean;
+  buttonStyles: string;
   children: ReactNode;
   footer?: {
     text: string;
@@ -44,7 +46,7 @@ export default function Form({
           whileTap={{ scale: 0.98 }}
           type="submit"
           disabled={isLoading || buttonDisabled}
-          className="cursor-pointer px-3 py-1 rounded-md font-semibold bg-[#822929] border-[#9f3a3a] border-[1.5px] hocus:brightness-125 duration-300 disabled:brightness-75 disabled:hocus:brightness-75 disabled:cursor-not-allowed"
+          className={`cursor-pointer px-3 py-1 rounded-md font-semibold ${buttonStyles} border-[1.5px] hocus:brightness-125 duration-300 disabled:brightness-75 disabled:hocus:brightness-75 disabled:cursor-not-allowed`}
         >
           {buttonText}
         </motion.button>
