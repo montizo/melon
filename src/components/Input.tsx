@@ -71,7 +71,7 @@ export default function Input({
   return (
     <div
       className={`grid ${
-        sideways == true ? "grid-cols-[1fr_2fr] grid-rows-2" : "grid-cols-1"
+        sideways == true ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
       }`}
     >
       <label htmlFor={name} className="text-sm font-semibold mb-2">

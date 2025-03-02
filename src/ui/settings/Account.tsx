@@ -7,36 +7,28 @@ import Input from "@/components/Input";
 import LogoutButton from "@/components/LogoutButton";
 import { passwordSchema } from "@/lib/validation";
 import { useActionState, useState, useEffect } from "react";
+import { useValidation } from "@/hooks/useValidation";
 
 export default function SettingsAccount({ username }: { username: string }) {
   const [state, action, isLoading] = useActionState(changePassword, null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [hasErrors, setHasErrors] = useState(true);
 
-  const handlePasswordChange = (value: string) => {
-    setPassword(value);
-  };
+  const hasErrors = useValidation([
+    { value: password, schema: passwordSchema },
+    { value: confirmPassword, schema: passwordSchema },
+  ]);
 
-  const handleConfirmPasswordChange = (value: string) => {
+  const handlePasswordChange = (value: string) => setPassword(value);
+  const handleConfirmPasswordChange = (value: string) =>
     setConfirmPassword(value);
-  };
 
   useEffect(() => {
-    if (
-      passwordSchema.safeParse(password).success &&
-      password === confirmPassword
-    ) {
-      setHasErrors(false);
-      setError("");
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
     } else {
-      setHasErrors(true);
-      if (password !== confirmPassword) {
-        setError("Passwords do not match");
-      } else {
-        setError("");
-      }
+      setError("");
     }
   }, [password, confirmPassword]);
 

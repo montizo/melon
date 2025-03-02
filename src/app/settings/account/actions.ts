@@ -4,7 +4,6 @@ import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
-import { checkRateLimit } from "@/utils/checkRateLimit";
 import bcrypt from "bcryptjs";
 import { ActionResult } from "@/app/types";
 

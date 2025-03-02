@@ -1,6 +1,6 @@
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
-import SettingsAccount from "@/ui/SettingsAccount";
+import SettingsAccount from "@/ui/settings/Account";
 import { redirect } from "next/navigation";
 
 export default async function SettingsPage() {
