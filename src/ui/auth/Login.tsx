@@ -5,6 +5,7 @@ import { emailSchema } from "@/lib/validation";
 import AuthForm from "@/components/AuthForm";
 import { useState } from "react";
 import { useValidation } from "@/hooks/useValidation";
+import Link from "next/link";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -26,7 +27,19 @@ export default function LoginForm() {
           validation: emailSchema,
           setExternalUseState: setEmail,
         },
-        { label: "Password", type: "password", name: "password" },
+        {
+          label: "Password",
+          labelRight: (
+            <Link
+              href="/forgot-password"
+              className="text-sm hocus:underline text-[#777]"
+            >
+              Forgot Password?
+            </Link>
+          ),
+          type: "password",
+          name: "password",
+        },
       ]}
       footer={{
         text: "Don't have an account?",

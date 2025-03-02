@@ -1,10 +1,10 @@
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ZodString } from "zod";
 import Error from "./Error";
 
 export default function Input({
   label,
+  labelRight,
   type,
   name,
   placeholder = "",
@@ -14,6 +14,7 @@ export default function Input({
   sideways,
 }: {
   label: string;
+  labelRight?: ReactNode;
   type: string;
   name: string;
   placeholder?: string;
@@ -74,9 +75,16 @@ export default function Input({
         sideways == true ? "grid-cols-[1fr_2fr]" : "grid-cols-1"
       }`}
     >
-      <label htmlFor={name} className="text-sm font-semibold mb-2">
-        {label}
-      </label>
+      <div
+        className="
+            flex-between
+          "
+      >
+        <label htmlFor={name} className="text-sm font-semibold mb-2">
+          {label}
+        </label>
+        {labelRight && labelRight}
+      </div>
       <div>
         <input
           id={name}

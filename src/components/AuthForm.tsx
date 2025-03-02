@@ -4,15 +4,20 @@ import Input from "@/components/Input";
 import Form from "@/components/Form";
 import { ZodString } from "zod";
 import { ActionResult } from "@/app/types";
+import { ReactNode } from "react";
 
 interface AuthFormProps {
   title: string;
   subTitle: string;
   buttonText: string;
   buttonDisabled: boolean;
-  formAction: (_: any, formData: FormData) => Promise<ActionResult>;
+  formAction: (
+    event: React.FormEvent,
+    formData: FormData
+  ) => Promise<ActionResult>;
   fields: {
     label: string;
+    labelRight?: ReactNode;
     type: string;
     name: string;
     placeholder?: string;
@@ -52,10 +57,11 @@ export default function AuthForm({
           label={field.label}
           type={field.type}
           name={field.name}
-          placeholder={field.placeholder}
+          placeholder={field.placeholder || ""}
           validation={field.validation}
           checkExists={field.checkExists}
           setExternalUseState={field.setExternalUseState}
+          labelRight={field.labelRight}
         />
       ))}
     </Form>
