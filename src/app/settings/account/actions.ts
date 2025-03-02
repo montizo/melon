@@ -6,22 +6,27 @@ import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
 import { checkRateLimit } from "@/utils/checkRateLimit";
 import bcrypt from "bcryptjs";
-import { ActionResult } from "../types";
+import { ActionResult } from "@/app/types";
 
 export default async function changePasswordAction(
   _: any,
   formData: FormData
 ): Promise<ActionResult> {
-  const newPassword = formData.get("newpassword");
-  const confirmPassword = formData.get("confirmpassword");
+  if (!formData) {
+    return { message: "No form data provided", success: false };
+  }
 
-  if (typeof newPassword !== "string" || typeof confirmPassword !== "string") {
-    return { message: "Invalid input fields", success: false };
+  const newPassword = formData.get("newpassword")?.toString();
+  const confirmPassword = formData.get("confirmpassword")?.toString();
+
+  if (!newPassword || !confirmPassword) {
+    return { message: "Password fields are required", success: false };
   }
 
   if (newPassword !== confirmPassword) {
     return { message: "Passwords do not match", success: false };
   }
+
   if (
     passwordSchema.safeParse(newPassword).success === false ||
     passwordSchema.safeParse(confirmPassword).success === false
@@ -30,12 +35,12 @@ export default async function changePasswordAction(
   }
 
   const session = await getCurrentSession();
-  if (session.userId === null) {
+  if (!session || !session.userId) {
     return { message: "User not found", success: false };
   }
 
   const user = await getUserById(session.userId);
-  if (user === null || user.id === null) {
+  if (!user || !user.id) {
     return { message: "User not found", success: false };
   }
 
@@ -48,5 +53,5 @@ export default async function changePasswordAction(
     },
   });
 
-  return { message: "Passwor changed successful", success: true };
+  return { message: "Password changed successfully", success: true };
 }

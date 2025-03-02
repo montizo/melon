@@ -36,6 +36,9 @@ export default function SignupForm() {
         return;
       }
     })();
+
+    console.log(hasErrors);
+    console.log(username, email, password);
   }, [username, email, password]);
 
   return (

@@ -1,6 +1,6 @@
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
-import Settings from "@/ui/Settings";
+import SettingsAccount from "@/ui/SettingsAccount";
 import { redirect } from "next/navigation";
 
 export default async function SettingsPage() {
@@ -16,5 +16,5 @@ export default async function SettingsPage() {
     redirect("/verify-email");
   }
 
-  return <Settings username={user.username} />;
+  return <SettingsAccount username={user.username} />;
 }

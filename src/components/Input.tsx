@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ZodString } from "zod";
+import Error from "./Error";
 
 export default function Input({
   label,
@@ -10,6 +11,7 @@ export default function Input({
   validation,
   checkExists,
   setExternalUseState,
+  sideways,
 }: {
   label: string;
   type: string;
@@ -18,6 +20,7 @@ export default function Input({
   validation?: ZodString;
   checkExists?: (value: string) => Promise<boolean>;
   setExternalUseState?: (value: string) => void;
+  sideways?: boolean;
 }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -33,7 +36,6 @@ export default function Input({
     if (checkExists && validationErrors == "") {
       (async () => {
         const exists = await checkExists(value);
-
         if (exists) {
           setError(`${label} already taken`);
         } else {
@@ -43,40 +45,55 @@ export default function Input({
     }
   }, [value]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    setValue(inputValue);
+
+    const result = validation?.safeParse(inputValue);
+    const validationErrors = result?.error?.errors[0]?.message || "";
+
+    setError(validationErrors);
+
+    setExternalUseState && setExternalUseState(inputValue);
+
+    if (checkExists && validationErrors === "") {
+      (async () => {
+        const exists = await checkExists(inputValue);
+        if (exists) {
+          setError(`${label} already taken`);
+        } else {
+          setError("");
+        }
+      })();
+    }
+  };
+
   return (
-    <div className="grid">
+    <div
+      className={`grid ${
+        sideways == true ? "grid-cols-[1fr_2fr] grid-rows-2" : "grid-cols-1"
+      }`}
+    >
       <label htmlFor={name} className="text-sm font-semibold mb-2">
         {label}
       </label>
-      <input
-        id={name}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        onBlur={() => setShowError(true)}
-        onChange={(e) => {
-          const inputValue = e.target.value;
-          setValue(inputValue);
-        }}
-        className={`w-full px-3 py-1 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
-          error == "" || !showError
-            ? `bg-[#181818] border-[#222222] placeholder-[#4d4d4d] focus:border-[#444444]`
-            : `bg-[#181111] border-[#7B271A] placeholder-[#5b251a] focus:border-[#9b291a]`
-        }`}
-      />
-      <AnimatePresence>
-        {error && showError && (
-          <motion.p
-            initial={{ marginTop: 0, height: 0, opacity: 0, rotateX: -90 }}
-            animate={{ marginTop: 8, height: "auto", opacity: 1, rotateX: 0 }}
-            exit={{ marginTop: 0, height: 0, opacity: 0, rotateX: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="text-[#df4f51] text-sm"
-          >
-            {error}
-          </motion.p>
-        )}
-      </AnimatePresence>
+      <div>
+        <input
+          id={name}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          onBlur={() => setShowError(true)}
+          onChange={handleChange}
+          className={`w-full px-3 py-1 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
+            error === "" || !showError
+              ? `bg-[#181818] border-[#222222] placeholder-[#4d4d4d] focus:border-[#444444]`
+              : `bg-[#181111] border-[#7B271A] placeholder-[#5b251a] focus:border-[#9b291a]`
+          }`}
+        />
+      </div>
+      <div></div>
+      <Error error={error} showError={showError} />
     </div>
   );
 }

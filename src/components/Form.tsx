@@ -10,6 +10,7 @@ export default function Form({
   buttonDisabled,
   children,
   footer,
+  width,
 }: {
   formAction: any;
   title: string;
@@ -22,16 +23,21 @@ export default function Form({
     linkText: string;
     linkTo: string;
   };
+  width?: string;
 }) {
   const [state, action, isLoading] = useActionState(formAction, null);
 
   return (
-    <div className="bg-[#181818] border-[1.5px] border-[#222222] p-8 rounded-2xl w-full max-w-md grid gap-8">
+    <div
+      className={`bg-[#181818] border-[1.5px] border-[#222222] p-8 rounded-2xl w-full ${
+        width ? width : "max-w-md"
+      } grid gap-8`}
+    >
       <div className="grid gap-1">
-        <h2 className="font-semibold text-3xl text-[#fafafa]">{title}</h2>
+        <h2 className="font-semibold text-2xl text-[#fafafa]">{title}</h2>
         <p>{subTitle}</p>
       </div>
-      <form action={action} className="grid gap-4">
+      <form method="POST" action={action} className="grid gap-4">
         {children}
         <motion.button
           whileHover={{ scale: 1.02 }}

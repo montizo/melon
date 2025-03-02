@@ -28,7 +28,7 @@ export default async function RootLayout({
     <html lang="en" className="h-full">
       <body className="h-full w-full">
         <Navbar username={user?.username ?? null} />
-        {children}
+        <div className="pt-14">{children}</div>
       </body>
     </html>
   );

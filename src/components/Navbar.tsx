@@ -13,7 +13,7 @@ export default function Navbar({ username }: { username: string | null }) {
   ) {
     return (
       <header className="absolute flex-center h-14">
-        <nav className="flex-between w-full max-w-6xl m-x-4 mx-8">
+        <nav className="flex-between w-full max-w-[1024px] mx-8">
           <Link
             href="/"
             className="font-bold text-lg hocus:text-white duration-300"
@@ -26,7 +26,7 @@ export default function Navbar({ username }: { username: string | null }) {
   }
 
   return (
-    <header className="flex-center bg-[#181818] h-14">
+    <header className="flex-center bg-[#111111] border-b-[1.5px] border-b-[#222222] h-14 fixed w-full">
       <nav className="flex-between w-full max-w-6xl m-x-4 mx-8">
         <Link
           href="/"

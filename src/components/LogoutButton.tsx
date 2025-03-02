@@ -1,6 +1,6 @@
 import React, { startTransition } from "react";
 import { useActionState } from "react";
-import logoutAction from "./actions";
+import logoutAction from "@/app/settings/actions";
 
 export default function LogoutButton() {
   const [state, action, isLoading] = useActionState(logoutAction, null);

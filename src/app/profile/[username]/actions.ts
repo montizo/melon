@@ -3,7 +3,6 @@
 import { ActionResult } from "@/app/types";
 import { getUserByUsername } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
-import { checkRateLimit } from "@/utils/checkRateLimit";
 
 export async function getProfileAction(
   username: string
