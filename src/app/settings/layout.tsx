@@ -1,6 +1,5 @@
 import Sidebar from "@/components/Sidebar";
 import { getCurrentSession } from "@/lib/auth/session";
-import { getUserById } from "@/lib/auth/user";
 import { redirect } from "next/navigation";
 
 export default async function SettingsLayout({
