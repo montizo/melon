@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import forgotPasswordCodeAction from "./actions";
 import { useRouter } from "next/navigation";
 
@@ -13,10 +13,12 @@ export default function ForgotPasswordCodePage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const unwrappedParams = params as { code: string };
+
   useEffect(() => {
     async function handleForgotPassword() {
       try {
-        await forgotPasswordCodeAction(params.code);
+        await forgotPasswordCodeAction(unwrappedParams.code);
         router.push("/settings/account");
       } catch (err) {
         console.error("Error processing forgot password:", err);

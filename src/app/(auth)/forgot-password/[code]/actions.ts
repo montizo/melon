@@ -7,7 +7,7 @@ import { getIpAddress } from "../../utils";
 
 export default async function forgotPasswordCodeAction(code: string) {
   const user = await prisma.user.findFirst({
-    where: { forgotPasswordLink: code },
+    where: { forgotPasswordLink: code.toLowerCase() },
   });
 
   if (!user?.id) {

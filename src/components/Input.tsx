@@ -101,7 +101,10 @@ export default function Input({
         />
       </div>
       <div></div>
-      <Error error={error} showError={showError} />
+      <Error
+        error={error}
+        showError={showError || (type == "password" && value != "")}
+      />
     </div>
   );
 }
