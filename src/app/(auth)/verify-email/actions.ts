@@ -5,6 +5,7 @@ import { getUserById } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
 import { error } from "console";
 import { redirect } from "next/navigation";
+import { checkRateLimitWithBackoff } from "../utils";
 
 export default async function verifyEmailAction(_: any, code: string) {
   const session = await getCurrentSession();
@@ -15,6 +16,11 @@ export default async function verifyEmailAction(_: any, code: string) {
   if (!user) return { error: "User not found" };
   if (user.isVerified) return { error: "Email already verified" };
   if (user.verifyCode !== code.toLowerCase()) return { error: "Invalid code" };
+
+  const error = await checkRateLimitWithBackoff(
+    "Too many login attempts. Try again later"
+  );
+  if (error) return error;
 
   await prisma.user.update({
     where: { id: user.id },
