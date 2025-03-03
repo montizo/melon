@@ -14,6 +14,11 @@ export default async function forgotPasswordCodeAction(code: string) {
     redirect("/");
   }
 
+  await prisma.user.updateMany({
+    where: { forgotPasswordLink: code },
+    data: { forgotPasswordLink: null },
+  });
+
   await setSessionCookie(user.id, await getIpAddress());
 
   redirect("/settings/account");
