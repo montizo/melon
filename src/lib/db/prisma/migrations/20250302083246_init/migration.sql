@@ -6,6 +6,8 @@ CREATE TABLE "User" (
     "passwordHash" TEXT NOT NULL,
     "verifyCode" TEXT,
     "isVerified" BOOLEAN NOT NULL DEFAULT false,
+    "forgotPasswordLink" TEXT,
+    "bio" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

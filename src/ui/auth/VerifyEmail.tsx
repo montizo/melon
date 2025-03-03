@@ -17,7 +17,7 @@ export default function VerifyEmail() {
   );
 
   const handleChange = (index: number, value: string) => {
-    if (!/^\d?$/.test(value)) return;
+    if (!/^[a-zA-Z0-9]?$/.test(value)) return;
 
     setCode((prevCode) => {
       const newCode = prevCode.split("");
@@ -35,10 +35,12 @@ export default function VerifyEmail() {
     const pastedText = e.clipboardData
       .getData("Text")
       .slice(0, 8)
-      .replace(/\D/g, "");
+      .replace(/[^a-zA-Z0-9]/g, "");
+
     if (!pastedText) return;
 
     setCode(pastedText);
+
     inputRefs[Math.min(index + pastedText.length, 7)]?.current?.focus();
   };
 

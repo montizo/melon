@@ -1,3 +1,5 @@
+"use server";
+
 import generateRandomString from "@/utils/randomString";
 import redis from "../db/redis";
 import { cookies, headers } from "next/headers";
@@ -13,13 +15,6 @@ interface Session {
   userId: string;
   ipAddress: string;
   expiresAt: number;
-}
-
-interface SessionData {
-  userId: string;
-  token: string;
-  ipAddress: string;
-  expiresAt: string;
 }
 
 export async function setSessionCookie(

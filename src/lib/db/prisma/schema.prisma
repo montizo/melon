@@ -17,6 +17,8 @@ model User {
   verifyCode String?
   isVerified Boolean @default(false)
 
+  forgotPasswordLink String?
+
   bio String?
 
   createdAt DateTime @default(now())

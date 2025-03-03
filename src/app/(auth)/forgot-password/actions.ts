@@ -1,13 +1,10 @@
 "use server";
 
 import { emailSchema } from "@/lib/validation";
-import {
-  authenticateUser,
-  checkRateLimitWithBackoff,
-  validateField,
-} from "../utils";
+import { validateField } from "../utils";
 import { ActionResult } from "@/app/types";
-import { redirect } from "next/navigation";
+import prisma from "@/lib/db/prisma/prisma";
+import crypto from "crypto";
 
 export default async function forgotPasswordAction(
   _: any,
@@ -15,14 +12,23 @@ export default async function forgotPasswordAction(
 ): Promise<ActionResult> {
   const email = formData.get("email");
 
+  if (typeof email !== "string")
+    return { message: "Invalid input", success: false };
+
   let error = validateField(email, emailSchema, "email");
   if (error) return error;
 
-  error = await checkRateLimitWithBackoff(
-    "Too many reset password attempts. Try again later"
-  );
-  if (error) return error;
+  //   error = await checkRateLimitWithBackoff(
+  //     "Too many reset password attempts. Try again later"
+  //   );
+  //   if (error) return error;
 
-  // send forgot-password code
-  redirect("/");
+  const link = crypto.randomBytes(64).toString("hex");
+
+  await prisma.user.update({
+    where: { email: email },
+    data: { forgotPasswordLink: link },
+  });
+
+  return { message: "Successfully sent email", success: true };
 }
