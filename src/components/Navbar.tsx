@@ -39,13 +39,13 @@ export default function Navbar({ username }: { username: string | null }) {
           <div className="flex-center gap-x-2">
             <Link
               href="/login"
-              className="cursor-pointer px-3 py-1 rounded-xl bg-[#2d2d2d] border-[#3a3a3a] border-1 hocus:brightness-125 duration-300"
+              className="cursor-pointer px-3 py-1 rounded-xl bg-[#2d2d2d] border-[#3a3a3a] border-[1.5px] hocus:brightness-125 duration-300"
             >
               Login
             </Link>
             <Link
               href="/signup"
-              className="cursor-pointer px-3 py-1 rounded-xl bg-[#822929] border-[#9f3a3a] border-1 hocus:brightness-125 duration-300"
+              className="cursor-pointer px-3 py-1 rounded-xl bg-[#822929] border-[#9f3a3a] border-[1.5px] hocus:brightness-125 duration-300"
             >
               Signup
             </Link>

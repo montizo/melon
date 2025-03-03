@@ -5,14 +5,14 @@ import { redirect } from "next/navigation";
 
 export default async function VerifyEmailPage() {
   const session = await getCurrentSession();
+  if (session.userId) {
+    const user = await getUserById(session.userId);
 
-  if (!session.userId) {
-    return;
-  }
-
-  const user = await getUserById(session.userId);
-  if (user?.isVerified) {
-    redirect("/");
+    if (user?.isVerified) {
+      redirect("/");
+    } else {
+      redirect("/verify-email");
+    }
   }
 
   return <VerifyEmail />;

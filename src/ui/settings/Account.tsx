@@ -43,7 +43,7 @@ export default function SettingsAccount({ username }: { username: string }) {
   };
 
   return (
-    <div className="h-[calc(100vh-56px)] flex-2 p-16">
+    <div className="h-[calc(100vh-56px)] flex-2 p-16 grid gap-8">
       <h1 className="font-semibold text-3xl text-[#fafafa] mb-2">Account</h1>
       <p>
         Hello, <strong>{username}</strong>!
