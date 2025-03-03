@@ -23,31 +23,28 @@ export default function Profile({ profile, ownProfile }: ProfileProps) {
   }
 
   const [bio, setBio] = useState(profile.bio);
-  const [isPending, setIsPending] = useState(false); // To track loading state
-  const [error, setError] = useState<string | null>(null); // To track any errors
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleBlur = async () => {
-    if (!bio) return; // Optional: Don't update if bio is empty.
+    if (!bio) return;
 
-    setIsPending(true); // Set loading state before updating
-    setError(null); // Reset any previous errors
+    setIsPending(true);
+    setError(null);
 
     try {
-      // Call the server action to update the bio
       const result: ActionResult = await setProfileBio(profile.username, bio);
 
-      // You may want to handle the result to confirm success
       if (result.success) {
         console.log("Bio updated successfully");
       } else {
-        // Handle any specific error returned by the action
         setError("Failed to update bio.");
       }
     } catch (err) {
       setError("An error occurred while updating bio.");
       console.error(err);
     } finally {
-      setIsPending(false); // Reset loading state
+      setIsPending(false);
     }
   };
 
@@ -56,17 +53,18 @@ export default function Profile({ profile, ownProfile }: ProfileProps) {
       <h2>{profile.username}</h2>
       <p>Joined: {new Date(profile.createdAt).toLocaleDateString()}</p>
       <hr />
-      <h4>Bio</h4>
+      <p className="text-sm font-semibold">Bio</p>
       <form>
-        <input
-          type="text"
+        <textarea
+          // cols={40}
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           onBlur={handleBlur}
           disabled={!ownProfile}
+          className="h-64 w-full px-3 py-1 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 bg-[#242424] border-[#2e2e2e] placeholder-[#4d4d4d] focus:border-[#444444] resize-none"
         />
       </form>
-      {/* {isPending && <p>Updating bio...</p>}{" "} */}
+      {isPending && <p className="text-green-400">Updating bio...</p>}{" "}
     </div>
   );
 }

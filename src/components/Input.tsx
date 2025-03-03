@@ -12,6 +12,7 @@ export default function Input({
   checkExists,
   setExternalUseState,
   sideways,
+  isDisabled,
 }: {
   label: string;
   labelRight?: ReactNode;
@@ -22,6 +23,7 @@ export default function Input({
   checkExists?: (value: string) => Promise<boolean>;
   setExternalUseState?: (value: string) => void;
   sideways?: boolean;
+  isDisabled?: boolean;
 }) {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -93,6 +95,7 @@ export default function Input({
           placeholder={placeholder}
           onBlur={() => setShowError(true)}
           onChange={handleChange}
+          disabled={isDisabled}
           className={`w-full px-3 py-1 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
             error === "" || !showError
               ? `bg-[#242424] border-[#2e2e2e] placeholder-[#4d4d4d] focus:border-[#444444]`

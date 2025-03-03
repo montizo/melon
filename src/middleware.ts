@@ -5,7 +5,7 @@ export async function middleware(req: NextRequest) {
 
   if (req.method === "POST" || req.method === "GET") {
     const rateLimitResponse = await fetch(rateLimitUrl, {
-      method: req.method, // Use the same HTTP method (POST or GET)
+      method: req.method,
     });
 
     if (rateLimitResponse.status === 429) {
