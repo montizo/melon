@@ -17,8 +17,21 @@ export default async function forgotPasswordCodeAction(
   const user = await prisma.user.findFirst({
     where: { forgotPasswordLink: code.toLowerCase() },
   });
+
   if (!user?.id) {
     return { message: "Incorrect code", success: false };
+  }
+
+  if (
+    user.forgotPasswordExpiry &&
+    user.forgotPasswordExpiry.getTime() < Date.now()
+  ) {
+    await prisma.user.updateMany({
+      where: { forgotPasswordLink: code },
+      data: { forgotPasswordLink: null },
+    });
+
+    return { message: "Expired code", success: false };
   }
 
   await prisma.user.updateMany({

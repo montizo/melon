@@ -29,7 +29,10 @@ export default async function forgotPasswordAction(
 
   await prisma.user.update({
     where: { email: email },
-    data: { forgotPasswordLink: link },
+    data: {
+      forgotPasswordLink: link,
+      forgotPasswordExpiry: new Date(new Date().getTime() + 1000 * 60 * 15),
+    },
   });
 
   return { message: "Successfully sent email", success: true };

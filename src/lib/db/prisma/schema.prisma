@@ -17,7 +17,8 @@ model User {
   verifyCode String?
   isVerified Boolean @default(false)
 
-  forgotPasswordLink String?
+  forgotPasswordLink   String?
+  forgotPasswordExpiry DateTime?
 
   bio String?
 
