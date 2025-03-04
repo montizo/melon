@@ -12,11 +12,15 @@ export default async function forgotPasswordAction(
 ): Promise<ActionResult> {
   const email = formData.get("email");
 
+  console.log(email);
+
   if (typeof email !== "string")
     return { message: "Invalid input", success: false };
 
   let error = validateField(email, emailSchema, "email");
   if (error) return error;
+
+  console.log(1);
 
   //   error = await checkRateLimitWithBackoff(
   //     "Too many reset password attempts. Try again later"
@@ -25,10 +29,12 @@ export default async function forgotPasswordAction(
 
   const link = crypto.randomBytes(64).toString("hex");
 
+  console.log(1);
   await prisma.user.update({
     where: { email: email },
     data: { forgotPasswordLink: link },
   });
 
+  console.log(1);
   return { message: "Successfully sent email", success: true };
 }

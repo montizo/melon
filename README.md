@@ -8,7 +8,7 @@ Before you begin, ensure you have met the following requirements:
 - **PostgreSQL** – [Install PostgreSQL](https://www.postgresql.org/download/)
 - **Redis** (optional if using Redis) – [Install Redis](https://redis.io/download)
 
-You’ll also need a Redis instance running if your project integrates Redis.
+You’ll also need a Redis instance running in the background.
 
 ## Installation
 

@@ -10,8 +10,6 @@ export default async function VerifyEmailPage() {
 
     if (user?.isVerified) {
       redirect("/");
-    } else {
-      redirect("/verify-email");
     }
   }
 

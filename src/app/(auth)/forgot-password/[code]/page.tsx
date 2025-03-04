@@ -1,19 +1,42 @@
-import { getCurrentSession } from "@/lib/auth/session";
-import { getUserById } from "@/lib/auth/user";
-import ForgotPassword from "@/ui/auth/ForgotPassword";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function ForgotPasswordCodePage() {
-  const session = await getCurrentSession();
-  if (session.userId) {
-    const user = await getUserById(session.userId);
+import { useEffect, useState } from "react";
+import forgotPasswordCodeAction from "./actions";
+import { useRouter } from "next/navigation";
 
-    if (user?.isVerified) {
-      redirect("/");
-    } else {
-      redirect("/verify-email");
+export default function ForgotPasswordCodePage({
+  params,
+}: {
+  params: { code: string };
+}) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function handleForgotPassword() {
+      if (!params?.code) {
+        setError("Invalid code.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        await forgotPasswordCodeAction(params.code);
+        router.push("/settings/account");
+      } catch (err) {
+        console.error("Error processing forgot password:", err);
+        setError("Failed to process request.");
+      } finally {
+        setLoading(false);
+      }
     }
-  }
 
-  return <ForgotPassword />;
+    handleForgotPassword();
+  }, [params?.code, router]);
+
+  if (loading) return <h1>Processing request...</h1>;
+  if (error) return <h1>{error}</h1>;
+
+  return <h1>Redirecting...</h1>;
 }
