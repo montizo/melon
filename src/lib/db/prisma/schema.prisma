@@ -43,7 +43,7 @@ model Set {
 model Card {
   id         String @id @default(cuid())
   term       String
-  defenition String
+  definition String
   setId      String
   set        Set    @relation(fields: [setId], references: [id])
 
