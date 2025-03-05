@@ -22,6 +22,31 @@ model User {
 
   bio String?
 
+  sets Set[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Set {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  userId      String
+  user        User   @relation(fields: [userId], references: [id])
+  cards       Card[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Card {
+  id         String @id @default(cuid())
+  term       String
+  defenition String
+  setId      String
+  set        Set    @relation(fields: [setId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
