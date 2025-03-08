@@ -4,7 +4,7 @@ import signupAction, {
   checkEmailNotTaken,
   checkUsernameNotTaken,
 } from "@/app/(auth)/signup/actions";
-import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
+import { emailSchema, passwordSchema, usernameSchema } from "@/lib/validation";
 import AuthForm from "@/components/AuthForm";
 import { useState } from "react";
 import { useValidation } from "@/hooks/useValidation";
@@ -17,7 +17,7 @@ export default function SignupForm() {
   const hasErrors = useValidation([
     {
       value: username,
-      schema: usernameShema,
+      schema: usernameSchema,
       checkExists: checkUsernameNotTaken,
     },
     { value: email, schema: emailSchema, checkExists: checkEmailNotTaken },
@@ -38,7 +38,7 @@ export default function SignupForm() {
           label: "Username",
           type: "text",
           name: "username",
-          validation: usernameShema,
+          validation: usernameSchema,
           checkExists: checkUsernameNotTaken,
           setExternalUseState: setUsername,
         },

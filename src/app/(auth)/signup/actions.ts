@@ -2,7 +2,7 @@
 
 import { ActionResult } from "@/app/types";
 import { getIpAddress, isUniqueEmailOrUsername, validateField } from "../utils";
-import { emailSchema, passwordSchema, usernameShema } from "@/lib/validation";
+import { emailSchema, passwordSchema, usernameSchema } from "@/lib/validation";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 import { setSessionCookie } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
@@ -15,7 +15,7 @@ export default async function signupAction(
   const email = formData.get("email");
   const password = formData.get("password");
 
-  let error = validateField(username, usernameShema, "username");
+  let error = validateField(username, usernameSchema, "username");
   if (error) return error;
 
   error = validateField(email, emailSchema, "email");

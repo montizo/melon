@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const usernameShema = z
+export const usernameSchema = z
   .string()
   .min(1, "Username is required")
   .min(5, "Username must be at least 5 characters")

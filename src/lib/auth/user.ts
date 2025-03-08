@@ -77,3 +77,19 @@ export async function getUserById(id: string) {
     },
   });
 }
+
+export async function getUser(params: Record<string, any>) {
+  const where: Record<string, any> = {};
+
+  for (const [key, value] of Object.entries(params)) {
+    if (key == "username") {
+      where.username = { equals: value, mode: "insensitive" };
+    } else {
+      where[key] = value;
+    }
+  }
+
+  return prisma.user.findFirst({
+    where,
+  });
+}

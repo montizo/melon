@@ -9,7 +9,7 @@ import { ActionResult } from "@/app/types";
 export default async function forgotPasswordCodeAction(
   code: string
 ): Promise<ActionResult | null> {
-  const error = checkRateLimitWithBackoff(
+  const error = await checkRateLimitWithBackoff(
     "Too many forgot-password attempts. Try again later"
   );
   if (error) return error;
