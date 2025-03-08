@@ -5,7 +5,7 @@ import {
   authenticateUser,
   checkRateLimitWithBackoff,
   validateField,
-} from "../utils";
+} from "../_utils";
 import { ActionResult } from "@/app/types";
 import { redirect } from "next/navigation";
 

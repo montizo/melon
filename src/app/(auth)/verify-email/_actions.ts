@@ -5,7 +5,7 @@ import { getUserById } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
 import { error } from "console";
 import { redirect } from "next/navigation";
-import { checkRateLimitWithBackoff } from "../utils";
+import { checkRateLimitWithBackoff } from "../_utils";
 
 export default async function verifyEmailAction(_: any, code: string) {
   const session = await getCurrentSession();

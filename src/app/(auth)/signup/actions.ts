@@ -1,7 +1,11 @@
 "use server";
 
 import { ActionResult } from "@/app/types";
-import { getIpAddress, isUniqueEmailOrUsername, validateField } from "../utils";
+import {
+  getIpAddress,
+  isUniqueEmailOrUsername,
+  validateField,
+} from "../_utils";
 import { emailSchema, passwordSchema, usernameSchema } from "@/lib/validation";
 import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
 import { setSessionCookie } from "@/lib/auth/session";

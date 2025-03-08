@@ -1,7 +1,7 @@
 "use server";
 
 import { emailSchema } from "@/lib/validation";
-import { checkRateLimitWithBackoff, validateField } from "../utils";
+import { checkRateLimitWithBackoff, validateField } from "../_utils";
 import { ActionResult } from "@/app/types";
 import prisma from "@/lib/db/prisma/prisma";
 import crypto from "crypto";

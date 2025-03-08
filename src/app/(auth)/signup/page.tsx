@@ -1,20 +1,50 @@
-import { getCurrentSession } from "@/lib/auth/session";
-import { getUserById } from "@/lib/auth/user";
-import SignupForm from "@/ui/auth/Signup";
-import { redirect } from "next/navigation";
+"use client";
 
-export default async function SignupPage() {
-  const session = await getCurrentSession();
+import Form from "../_components/Form";
+import Input from "../_components/Input";
+import SubmitButton from "../_components/SubmitButton";
+import useValidation from "../_useValidation";
+import { validationSchema } from "./_validationSchema";
+import signupAction from "./actions";
 
-  if (session.userId) {
-    const user = await getUserById(session.userId);
+export default function SignupPage() {
+  const { values, errors, handleChange, isValid, pendingField } =
+    useValidation(validationSchema);
 
-    if (user?.isVerified) {
-      redirect("/");
-    } else {
-      redirect("/verify-email");
-    }
-  }
-
-  return <SignupForm />;
+  return (
+    <Form
+      formAction={signupAction}
+      title="Welcome to app"
+      subtitle="Create a new account"
+    >
+      <Input
+        label="Username"
+        type="text"
+        name="username"
+        placeholder="Enter your username"
+        value={values.username}
+        onChange={handleChange}
+        error={errors.username}
+      />
+      <Input
+        label="Email"
+        type="text"
+        name="email"
+        placeholder="Enter your email"
+        value={values.email}
+        onChange={handleChange}
+        error={errors.email}
+      />
+      <Input
+        label="Password"
+        type="password"
+        name="password"
+        placeholder="Enter your password"
+        value={values.password}
+        onChange={handleChange}
+        error={errors.password}
+      />
+      <SubmitButton disabled={!isValid}>Sign Up</SubmitButton>
+    </Form>
+  );
 }

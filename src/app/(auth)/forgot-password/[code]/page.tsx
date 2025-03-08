@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
-import forgotPasswordCodeAction from "./actions";
+import forgotPasswordCodeAction from "./_actions";
 import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordCodePage({
