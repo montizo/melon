@@ -3,9 +3,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useActionState } from "react";
 import verifyEmailAction from "./_actions";
-import SubmitButton from "../_components/SubmitButton";
-import Form from "../_components/Form";
-import Card from "../_components/Card";
+import SubmitButton from "../../../components/forms/SubmitButton";
+import Form from "../../../components/forms/Form";
+import Card from "../../../components/forms/Card";
 import Link from "next/link";
 
 export default function VerifyEmailPage() {

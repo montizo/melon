@@ -1,4 +1,4 @@
-import Error from "@/components/Error";
+import Error from "@/components/forms/Error";
 import { useState } from "react";
 
 export default function Input({

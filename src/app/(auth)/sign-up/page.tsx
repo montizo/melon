@@ -1,9 +1,9 @@
 "use client";
 
-import FooterLink from "../_components/FooterLink";
-import Form from "../_components/Form";
-import Input from "../_components/Input";
-import SubmitButton from "../_components/SubmitButton";
+import FooterLink from "../../../components/forms/FooterLink";
+import Form from "../../../components/forms/Form";
+import Input from "../../../components/forms/Input";
+import SubmitButton from "../../../components/forms/SubmitButton";
 import useValidation from "../_useValidation";
 import { validationSchema } from "./_validationSchema";
 import signupAction from "./actions";

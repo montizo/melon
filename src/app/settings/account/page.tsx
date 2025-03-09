@@ -1,11 +1,11 @@
 "use client";
 
 import changePassword from "@/app/settings/account/actions";
-import Input from "@/app/(auth)/_components/Input";
+import Input from "@/components/forms/Input";
 import LogoutButton from "@/components/LogoutButton";
 import { useActionState } from "react";
-import SubmitButton from "@/app/(auth)/_components/SubmitButton";
-import Form from "@/app/(auth)/_components/Form";
+import SubmitButton from "@/components/forms/SubmitButton";
+import Form from "@/components/forms/Form";
 import useValidation from "@/app/(auth)/_useValidation";
 import { changePasswordValidation } from "@/app/settings/account/_validationSchema";
 import changePasswordAction from "@/app/settings/account/actions";

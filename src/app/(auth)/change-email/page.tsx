@@ -3,11 +3,11 @@
 import { emailSchema } from "@/lib/validation";
 import { z } from "zod";
 import useValidation from "../_useValidation";
-import Input from "../_components/Input";
-import Form from "../_components/Form";
-import SubmitButton from "../_components/SubmitButton";
+import Input from "../../../components/forms/Input";
+import Form from "../../../components/forms/Form";
+import SubmitButton from "../../../components/forms/SubmitButton";
 import Link from "next/link";
-import FooterLink from "../_components/FooterLink";
+import FooterLink from "../../../components/forms/FooterLink";
 import changeEmailAction from "./_actions";
 import checkExists from "../_checkExists";
 

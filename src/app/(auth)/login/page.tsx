@@ -3,12 +3,12 @@
 import { emailSchema } from "@/lib/validation";
 import { z } from "zod";
 import useValidation from "../_useValidation";
-import Input from "../_components/Input";
+import Input from "../../../components/forms/Input";
 import loginAction from "./_actions";
-import Form from "../_components/Form";
-import SubmitButton from "../_components/SubmitButton";
+import Form from "../../../components/forms/Form";
+import SubmitButton from "../../../components/forms/SubmitButton";
 import Link from "next/link";
-import FooterLink from "../_components/FooterLink";
+import FooterLink from "../../../components/forms/FooterLink";
 
 export default function LoginPage() {
   const { values, errors, handleChange, isValid, pendingField } = useValidation(
