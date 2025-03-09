@@ -18,7 +18,7 @@ export default async function verifyEmailAction(_: any, code: string) {
   if (user.verifyCode !== code.toLowerCase()) return { error: "Invalid code" };
 
   const error = await checkRateLimitWithBackoff(
-    "Too many login attempts. Try again later"
+    "Too many verify email attempts. Try again later"
   );
   if (error) return error;
 

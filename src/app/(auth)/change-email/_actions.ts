@@ -29,9 +29,10 @@ export default async function changeEmailAction(
     redirect("/login");
   }
 
-  await updateUserEmail(session.userId, email);
+  const user = await updateUserEmail(session.userId, email);
 
+  if (user.isVerified) {
+    redirect("/");
+  }
   redirect("/verify-email");
-
-  return { success: true, message: "Successfully changed email" };
 }

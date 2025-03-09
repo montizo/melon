@@ -95,5 +95,6 @@ export async function getUser(params: Record<string, any>) {
 }
 
 export async function updateUserEmail(id: string, email: string) {
-  return prisma.user.update({ where: { id }, data: { email } });
+  const verifyCode = generateRandomString(8);
+  return prisma.user.update({ where: { id }, data: { email, verifyCode } });
 }
