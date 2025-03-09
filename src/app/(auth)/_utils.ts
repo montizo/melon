@@ -2,9 +2,9 @@ import { headers } from "next/headers";
 import { ZodType } from "zod";
 import { ActionResult } from "../types";
 import exponentialBackoff from "@/utils/exponentialBackoff";
-import { getUserByEmail, isEmailOrUsernameTaken } from "@/lib/auth/user";
+import { getUserByEmail, isEmailOrUsernameTaken } from "@/lib/user";
 import bcrypt from "bcryptjs";
-import { setSessionCookie } from "@/lib/auth/session";
+import { setSessionCookie } from "@/lib/session";
 
 export async function getIpAddress(): Promise<string> {
   const reqHeaders = await headers();

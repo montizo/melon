@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/db/prisma/prisma";
-import { setSessionCookie } from "@/lib/auth/session";
+import { setSessionCookie } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { checkRateLimitWithBackoff, getIpAddress } from "../../_utils";
 import { ActionResult } from "@/app/types";

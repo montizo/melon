@@ -4,8 +4,8 @@ import { emailSchema } from "@/lib/validation";
 import { checkRateLimitWithBackoff, validateField } from "../_utils";
 import { ActionResult } from "@/app/types";
 import { redirect } from "next/navigation";
-import { getCurrentSession } from "@/lib/auth/session";
-import { updateUserEmail } from "@/lib/auth/user";
+import { getCurrentSession } from "@/lib/session";
+import { updateUserEmail } from "@/lib/user";
 
 export default async function changeEmailAction(
   _: any,

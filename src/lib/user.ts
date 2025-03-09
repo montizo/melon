@@ -1,4 +1,4 @@
-import prisma from "../db/prisma/prisma";
+import prisma from "./db/prisma/prisma";
 import bcrypt from "bcryptjs";
 import generateRandomString from "@/utils/randomString";
 

@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import "./globals.css";
 import { checkRateLimit } from "@/utils/checkRateLimit";
 import Navbar from "@/components/Navbar";
-import { getCurrentSession } from "@/lib/auth/session";
-import { getUserById } from "@/lib/auth/user";
+import { getCurrentSession } from "@/lib/session";
+import { getUserById } from "@/lib/user";
 
 export const metadata: Metadata = {
   title: "Create Next App",

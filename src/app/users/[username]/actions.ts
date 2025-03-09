@@ -1,7 +1,7 @@
 "use server";
 
 import { ActionResult } from "@/app/types";
-import { getUserByUsername } from "@/lib/auth/user";
+import { getUserByUsername } from "@/lib/user";
 import prisma from "@/lib/db/prisma/prisma";
 
 export async function getUsereAction(username: string): GetProfileActionResult {

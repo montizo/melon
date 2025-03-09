@@ -7,8 +7,8 @@ import {
   validateField,
 } from "../_utils";
 import { emailSchema, passwordSchema, usernameSchema } from "@/lib/validation";
-import { createUser, isEmailOrUsernameTaken } from "@/lib/auth/user";
-import { setSessionCookie } from "@/lib/auth/session";
+import { createUser, isEmailOrUsernameTaken } from "@/lib/user";
+import { setSessionCookie } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 export default async function signupAction(

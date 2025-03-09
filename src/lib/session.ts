@@ -1,7 +1,7 @@
 "use server";
 
 import generateRandomString from "@/utils/randomString";
-import redis from "../db/redis";
+import redis from "./db/redis";
 import { cookies, headers } from "next/headers";
 
 const SESSION_EXPIRY_DAYS = parseInt(

@@ -1,8 +1,8 @@
 "use server";
 
 import { ActionResult } from "@/app/types";
-import { getCurrentSession } from "@/lib/auth/session";
-import { getUserById } from "@/lib/auth/user";
+import { getCurrentSession } from "@/lib/session";
+import { getUserById } from "@/lib/user";
 import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";

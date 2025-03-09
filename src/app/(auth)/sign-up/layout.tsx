@@ -1,5 +1,5 @@
-import { getCurrentSession } from "@/lib/auth/session";
-import { getUser } from "@/lib/auth/user";
+import { getCurrentSession } from "@/lib/session";
+import { getUser } from "@/lib/user";
 import { redirect } from "next/navigation";
 
 export default async function SignupLayout({

@@ -1,6 +1,6 @@
 "use server";
 
-import { deleteSessionCookie } from "@/lib/auth/session";
+import { deleteSessionCookie } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 export default async function logoutAction() {
