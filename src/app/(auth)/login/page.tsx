@@ -8,11 +8,13 @@ import loginAction from "./_actions";
 import Form from "../_components/Form";
 import SubmitButton from "../_components/SubmitButton";
 import Link from "next/link";
+import FooterLink from "../_components/FooterLink";
 
-export default async function LoginPage() {
+export default function LoginPage() {
   const { values, errors, handleChange, isValid, pendingField } = useValidation(
     z.object({
       email: emailSchema,
+      password: z.string(),
     })
   );
 
@@ -48,9 +50,11 @@ export default async function LoginPage() {
           error={errors.password}
         />
       </div>
-      <SubmitButton disabled={!isValid || pendingField == null}>
-        Login
-      </SubmitButton>
+      <SubmitButton disabled={!isValid}>Login</SubmitButton>
+      <FooterLink
+        text="Don't have an account?"
+        link={{ text: "Sign Up", link: "/sign-up" }}
+      />
     </Form>
   );
 }

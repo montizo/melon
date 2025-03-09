@@ -2,8 +2,11 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import { useActionState } from "react";
-import Form from "@/components/Form";
-import verifyEmailAction from "@/app/(auth)/verify-email/actions";
+import verifyEmailAction from "./_actions";
+import SubmitButton from "../_components/SubmitButton";
+import Form from "../_components/Form";
+import Card from "../_components/Card";
+import Link from "next/link";
 
 export default function VerifyEmailPage() {
   const [state, action] = useActionState(verifyEmailAction, null);
@@ -11,21 +14,23 @@ export default function VerifyEmailPage() {
   const inputRefs = useMemo(
     () =>
       Array(8)
-        .fill(null)
+        .fill(" ")
         .map(() => React.createRef<HTMLInputElement>()),
     []
   );
-
   const handleChange = (index: number, value: string) => {
     if (!/^[a-zA-Z0-9]?$/.test(value)) return;
 
     setCode((prevCode) => {
       const newCode = prevCode.split("");
       newCode[index] = value;
+      console.log(newCode);
       return newCode.join("");
     });
 
     if (value && index < 7) inputRefs[index + 1].current?.focus();
+
+    console.log("Updated", code);
   };
 
   const handlePaste = (
@@ -58,27 +63,34 @@ export default function VerifyEmailPage() {
   }, []);
 
   return (
-    <Form
-      formAction={() => action(code)}
-      title="Verify Email"
-      buttonText="Verify Email"
-      buttonStyles="bg-[#822929] border-[#9f3a3a]"
+    <Card
+      title="Verify Your Email Address"
+      subtitle={`A verification code has been sent to email`}
     >
-      <div className="flex justify-between">
-        {Array.from({ length: 8 }, (_, index) => (
-          <input
-            key={index}
-            ref={inputRefs[index]}
-            type="text"
-            maxLength={1}
-            value={code[index] || ""}
-            onChange={(e) => handleChange(index, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(index, e)}
-            onPaste={(e) => handlePaste(e, index)}
-            className="border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 bg-[#242424] border-[#2e2e2e] placeholder-[#4d4d4d] focus:border-[#444444] w-10 h-10 text-center"
-          />
-        ))}
+      <form method="POST" onSubmit={() => action(code)} className="grid gap-4">
+        <p>Check your inbox to access the 8-digit code</p>
+        <div className="flex justify-between">
+          <input type="hidden" name="code" value={code} />
+          {Array.from({ length: 8 }, (_, index) => (
+            <input
+              key={index}
+              ref={inputRefs[index]}
+              type="text"
+              maxLength={1}
+              value={code[index] || ""}
+              onChange={(e) => handleChange(index, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
+              onPaste={(e) => handlePaste(e, index)}
+              className="border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 bg-[#242424] border-[#2e2e2e] placeholder-[#4d4d4d] focus:border-[#444444] w-10 h-10 text-center"
+            />
+          ))}
+        </div>
+        <SubmitButton disabled={code.length !== 8}>Verify Email</SubmitButton>
+      </form>
+      <div className="flex-between">
+        <button>Resend Code</button>
+        <Link href={"/change-email"}>Change Email</Link>
       </div>
-    </Form>
+    </Card>
   );
 }

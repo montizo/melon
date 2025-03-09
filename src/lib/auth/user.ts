@@ -93,3 +93,7 @@ export async function getUser(params: Record<string, any>) {
     where,
   });
 }
+
+export async function updateUserEmail(id: string, email: string) {
+  return prisma.user.update({ where: { id }, data: { email } });
+}

@@ -86,8 +86,19 @@ export default function useValidation<T extends ZodObject<any>>(
       (field) => values[field]?.trim() !== ""
     );
 
+    console.log(
+      "Doesn't have errors:",
+      !hasErrors,
+      "All fields filled:",
+      allFieldsFilled
+    );
+
     setIsValid(!hasErrors && allFieldsFilled);
   }, [values, errors, schema]);
+
+  useEffect(() => {
+    console.log("Errors:", errors);
+  }, [errors]);
 
   return { values, errors, handleChange, isValid, pendingField };
 }

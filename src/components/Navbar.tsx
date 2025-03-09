@@ -44,7 +44,7 @@ export default function Navbar({ username }: { username: string | null }) {
               Login
             </Link>
             <Link
-              href="/signup"
+              href="/sign-up"
               className="cursor-pointer px-3 py-1 rounded-xl bg-[#822929] border-[#9f3a3a] border-[1.5px] hocus:brightness-125 duration-300"
             >
               Signup

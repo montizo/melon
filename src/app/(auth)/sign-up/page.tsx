@@ -1,5 +1,6 @@
 "use client";
 
+import FooterLink from "../_components/FooterLink";
 import Form from "../_components/Form";
 import Input from "../_components/Input";
 import SubmitButton from "../_components/SubmitButton";
@@ -45,6 +46,10 @@ export default function SignupPage() {
         error={errors.password}
       />
       <SubmitButton disabled={!isValid}>Sign Up</SubmitButton>
+      <FooterLink
+        text="Have an account?"
+        link={{ text: "Login", link: "/login" }}
+      />
     </Form>
   );
 }
