@@ -7,11 +7,13 @@ export default function Form({
   formAction,
   title,
   subtitle,
+  styles,
 }: {
   children: ReactNode;
   formAction: (_: any, formData: FormData) => Promise<ActionResult>;
   title: string;
   subtitle: string;
+  styles?: string;
 }) {
   const [state, action, isLoading] = useActionState(formAction, {
     message: "",
@@ -19,8 +21,8 @@ export default function Form({
   });
 
   return (
-    <Card title={title} subtitle={subtitle}>
-      <form method="POST" action={action} className="grid gap-2 relative">
+    <Card title={title} subtitle={subtitle} styles={styles || "max-w-md"}>
+      <form action={action} className="grid gap-2 relative">
         {children}
       </form>
     </Card>

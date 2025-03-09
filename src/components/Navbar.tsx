@@ -8,7 +8,7 @@ export default function Navbar({ username }: { username: string | null }) {
 
   if (
     pathName == "/login" ||
-    pathName == "/signup" ||
+    pathName == "/sign-up" ||
     pathName == "/verify-email" ||
     pathName == "/forgot-password"
   ) {

@@ -23,3 +23,13 @@ export const passwordSchema = z
   .regex(/[a-z]/, "Password must have a lowercase letter")
   .regex(/[A-Z]/, "Password must have a uppercase letter")
   .regex(/\d/, "Password must have a one number");
+
+export const passwordMatchSchema = z
+  .object({
+    newPassword: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });

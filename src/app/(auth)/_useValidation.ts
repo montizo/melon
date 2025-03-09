@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ZodObject } from "zod";
+import { ZodObject, ZodError } from "zod";
 
 export default function useValidation<T extends ZodObject<any>>(
   schema: T,
@@ -7,14 +7,21 @@ export default function useValidation<T extends ZodObject<any>>(
     Promise.resolve(false)
 ) {
   const [values, setValues] = useState<Record<string, string>>({});
-  const [errors, setErrors] = useState<Record<string, string>>(() =>
-    Object.keys(schema.shape).reduce<Record<string, string>>((acc, field) => {
-      acc[field] = `${
-        field.charAt(0).toUpperCase() + field.slice(1)
-      } is required`;
-      return acc;
-    }, {})
-  );
+  const [errors, setErrors] = useState<Record<string, string>>(() => {
+    // Check if schema has a shape property
+    if (schema && schema.shape) {
+      return Object.keys(schema.shape).reduce<Record<string, string>>(
+        (acc, field) => {
+          acc[field] = `${
+            field.charAt(0).toUpperCase() + field.slice(1)
+          } is required`;
+          return acc;
+        },
+        {}
+      );
+    }
+    return {}; // Return an empty object if no shape property is found
+  });
   const [isValid, setIsValid] = useState(false);
   const [pendingField, setPendingField] = useState<string | null>(null);
 
@@ -30,6 +37,14 @@ export default function useValidation<T extends ZodObject<any>>(
       ...prevErrors,
       [name]: result.success ? "" : result.error.errors[0].message,
     }));
+
+    if (name === "confirmPassword" && values.newPassword !== value) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        confirmPassword: "Passwords must match",
+      }));
+      return false;
+    }
 
     return result.success;
   };
@@ -77,6 +92,8 @@ export default function useValidation<T extends ZodObject<any>>(
           setPendingField(null);
         });
     }, 500);
+
+    console.log("Values:", values, "Errors:", errors);
   };
 
   useEffect(() => {

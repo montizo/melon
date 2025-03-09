@@ -6,7 +6,7 @@ export default function Input({
   type,
   name,
   placeholder,
-  value,
+  value = "",
   onChange,
   error,
 }: {
@@ -21,8 +21,8 @@ export default function Input({
   const [showError, setShowError] = useState(false);
 
   return (
-    <div className="grid">
-      <label className="text-sm font-medium">{label}</label>
+    <div className="grid xl:grid-cols-[1fr_2fr]">
+      <label className="text-sm font-medium flex items-center">{label}</label>
       <input
         type={type}
         name={name}
@@ -30,12 +30,13 @@ export default function Input({
         onChange={onChange}
         onBlur={() => setShowError(true)}
         placeholder={placeholder}
-        className={`w-full px-3 py-1 my-2 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200 ${
+        className={`w-full px-3 py-1 my-2 border-[1.5px] text-[#fafafa] outline-none focus:ring-3 ring-[#242424] rounded-md duration-200  ${
           error === "" || !showError
             ? `bg-[#242424] border-[#2e2e2e] placeholder-[#4d4d4d] focus:border-[#444444]`
             : `bg-[#1C1412] border-[#7B271A] placeholder-[#521E17] focus:border-[#9b291a]`
         }`}
       />
+      <div></div>
       <Error error={error ?? ""} showError={showError} />
     </div>
   );

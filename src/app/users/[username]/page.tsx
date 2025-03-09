@@ -1,7 +1,7 @@
 import { getUsereAction } from "@/app/users/[username]/actions";
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
-import Profile from "@/ui/User";
+import Profile from "@/app/users/[username]/User";
 import React from "react";
 export default async function ProfilePage({
   params,

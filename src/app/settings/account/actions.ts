@@ -1,19 +1,19 @@
 "use server";
 
+import { ActionResult } from "@/app/types";
 import { getCurrentSession } from "@/lib/auth/session";
 import { getUserById } from "@/lib/auth/user";
 import prisma from "@/lib/db/prisma/prisma";
 import { passwordSchema } from "@/lib/validation";
 import bcrypt from "bcryptjs";
-import { ActionResult } from "@/app/types";
 import { redirect } from "next/navigation";
 
 export default async function changePasswordAction(
   _: any,
   formData: FormData
 ): Promise<ActionResult> {
-  const newPassword = formData.get("newpassword")?.toString();
-  const confirmPassword = formData.get("confirmpassword")?.toString();
+  const newPassword = formData.get("newPassword")?.toString();
+  const confirmPassword = formData.get("confirmPassword")?.toString();
 
   if (!newPassword || !confirmPassword) {
     return { message: "Password fields are required", success: false };
