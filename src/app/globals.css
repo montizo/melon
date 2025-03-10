@@ -33,3 +33,7 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: #fafafa;
   @apply bg-[#242424] caret-[#fafafa];
 }
+
+* {
+  box-sizing: border-box;
+}
