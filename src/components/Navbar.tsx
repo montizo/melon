@@ -27,7 +27,7 @@ export default function Navbar({ username }: { username: string | null }) {
   }
 
   return (
-    <header className="flex-center bg-[#171717] border-b-[1.5px] border-b-[#2e2e2e] h-14 fixed w-full">
+    <header className="flex-center bg-[#171717] border-b-[1.5px] border-b-[#2e2e2e] h-14 fixed w-full z-999">
       <nav className="flex-between w-full max-w-6xl m-x-4 mx-8">
         <Link
           href="/"

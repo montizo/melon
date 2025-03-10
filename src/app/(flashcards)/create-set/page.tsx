@@ -1,44 +1,78 @@
 "use client";
 
-import Card from "@/components/forms/Card";
 import Input from "@/components/forms/Input";
 import TextBox from "@/components/forms/TextBox";
 import { Trash } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
+import { saveFlashcardSet } from "../_saveFlashcardSet";
+import EditFlashcard from "@/components/flashcard/EditFlashcard";
+import { FlashcardSet } from "@/lib/flashcards/set";
 
 export default function CreateSetPage() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [cards, setCards] = useState([{ term: "", definition: "" }]);
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [cards, setCards] = useState<{ term: string; definition: string }[]>([
+    { term: "", definition: "" },
+  ]);
+  const [lastSavedState, setLastSavedState] = useState<FlashcardSet>({
+    title: "",
+    description: "",
+    cards: [],
+  });
+  const [deletingIndex, setDeletingIndex] = useState<number | null>(null);
 
-  const addCard = () => {
-    setCards([...cards, { term: "", definition: "" }]);
-  };
+  const addCard = () => setCards([...cards, { term: "", definition: "" }]);
 
   const updateCard = (
     index: number,
     field: "term" | "definition",
     value: string
   ) => {
-    const newCards = [...cards];
-    newCards[index][field] = value;
-    setCards(newCards);
+    setCards((prevCards) => {
+      const newCards = [...prevCards];
+      newCards[index] = { ...newCards[index], [field]: value };
+      return newCards;
+    });
   };
 
-  const deleteCard = (index: number) => {
-    const newCards = cards.filter((_, i) => i !== index);
-    setCards(newCards);
+  const deleteCard = (index: number) => setDeletingIndex(index);
+
+  const handleAnimationComplete = (index: number) => {
+    setCards((prevCards) => prevCards.filter((_, i) => i !== index));
+    setDeletingIndex(null);
   };
+
+  const saveData = useCallback(async () => {
+    const newState: FlashcardSet = { title, description, cards };
+    if (JSON.stringify(newState) !== JSON.stringify(lastSavedState)) {
+      console.log("Saving flashcard set...");
+      await saveFlashcardSet(newState);
+      setLastSavedState(newState);
+    }
+  }, [title, description, cards, lastSavedState]);
+
+  useEffect(() => {
+    const interval = setInterval(saveData, 3000);
+    return () => clearInterval(interval);
+  }, [saveData]);
+
+  useEffect(() => {
+    const handleUnload = () => saveData();
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
+  }, [saveData]);
 
   return (
-    <div className="flex">
-      <aside className="border-r-[1.5px] border-r-[#2e2e2e] p-8 h-[calc(100vh-56px)] w-full max-w-64">
-        <h2 className="text-xl text-[#fafafa] font-semibold">Details</h2>
+    <div className="flex flex-col px-16 py-4 gap-4">
+      <h2 className="font-bold text-[#fafafa] text-3xl">
+        Create a new flashcard set
+      </h2>
+      <div className="bg-[#1f1f1f] border-[1.5px] border-[#2e2e2e] rounded-2xl w-full grid gap-2 px-8 py-4">
         <Input
           label="Title"
           type="text"
           name="title"
-          placeholder=""
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -46,41 +80,27 @@ export default function CreateSetPage() {
           label="Description"
           type="text"
           name="description"
-          placeholder=""
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-      </aside>
-
-      <div className="p-16 w-full grid gap-8">
-        <h3 className="text-[#fafafa] font-semibold text-2xl">Flashcards</h3>
+      </div>
+      <hr className="border-t-[#2e2e2e] border-t-[1.5px] my-3" />
+      <div className="w-full flex flex-col gap-4">
         {cards.map((card, index) => (
-          <Card key={index} styles="grid grid-cols-[1fr_1fr] relative">
-            <Trash
-              className="text-red absolute right-2 top-2 size-5 cursor-pointer hocus:brightness-125"
-              onClick={() => deleteCard(index)}
-            />
-            <TextBox
-              label="Term"
-              type="text"
-              name="term"
-              onChange={(e) => updateCard(index, "term", e.target.value)}
-              value={cards[index].term}
-            />
-            <TextBox
-              label="Definition"
-              type="text"
-              name="definition"
-              onChange={(e) => updateCard(index, "definition", e.target.value)}
-              value={cards[index].definition}
-            />
-          </Card>
+          <EditFlashcard
+            key={index}
+            index={index}
+            card={card}
+            updateCard={updateCard}
+            deleteCard={deleteCard}
+            deletingIndex={deletingIndex}
+            handleAnimationComplete={handleAnimationComplete}
+          />
         ))}
-
         <button
           type="button"
           onClick={addCard}
-          className="mt-4 p-2 bg-blue-500 text-white rounded"
+          className="px-3 py-1 bg-[#2d2d2d] border-[#3a3a3a] border-[1.5px] hocus:brightness-125 cursor-pointer rounded-xl duration-300"
         >
           Add Flashcard
         </button>

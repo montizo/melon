@@ -32,3 +32,8 @@ export async function deleteCard(id: string) {
     where: { id },
   });
 }
+
+export interface Card {
+  term: string;
+  definition: string;
+}

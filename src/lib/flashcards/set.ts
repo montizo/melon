@@ -1,5 +1,11 @@
 import prisma from "../db/prisma/prisma";
 
+export interface FlashcardSet {
+  title: string;
+  description: string;
+  cards: { term: string; definition: string }[];
+}
+
 export async function isSetTitleTaken(
   userId: string,
   title: string
